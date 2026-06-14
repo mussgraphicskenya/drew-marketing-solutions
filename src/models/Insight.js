@@ -12,6 +12,9 @@ const InsightSchema = new mongoose.Schema({
     keyTakeaways: [String],
     articleImages: [String],
     tags: [String],
+    conclusionTitle: { type: String },
+    conclusionContent: { type: String },
+
 }, { timestamps: true });
 
 export default mongoose.models.Insight || mongoose.model('Insight', InsightSchema);

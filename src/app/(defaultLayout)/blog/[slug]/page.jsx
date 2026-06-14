@@ -142,9 +142,26 @@ const BlogDetailPage = async ({ params }) => {
                                                 ))}
                                             </div>
                                         )}
+
+                                        {/* Conclusion — shown only when at least one field is populated */}
+                                        {(item.conclusionTitle || item.conclusionContent) && (
+                                            <div style={{ marginTop: '30px', marginBottom: '20px' }}>
+                                                {item.conclusionTitle && (
+                                                    <h3 className="blog-details-title two" style={{ marginBottom: '15px' }}>
+                                                        {item.conclusionTitle}
+                                                    </h3>
+                                                )}
+                                                {item.conclusionContent && (
+                                                    <p className="blog-details-desc three">
+                                                        {item.conclusionContent}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Social share + tags */}
+
                                     <div className="blog-details-socila-box">
                                         <div className="row align-items-center">
                                             <div className="col-lg-6 col-md-6">

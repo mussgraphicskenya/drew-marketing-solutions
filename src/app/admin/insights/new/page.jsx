@@ -13,6 +13,7 @@ export default function NewInsightPage() {
         title: '', slug: '', excerpt: '', content: '',
         category: CATEGORIES[0], author: '', coverImage: '', featured: false,
         keyTakeaways: '', tags: '', articleImage1: '', articleImage2: '',
+        conclusionTitle: '', conclusionContent: '',
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -111,6 +112,16 @@ export default function NewInsightPage() {
                         <div>
                             <label style={labelStyle}>Content *</label>
                             <textarea name="content" required rows={8} value={form.content} onChange={handleChange} style={textareaStyle} placeholder="Full article content..." />
+                        </div>
+
+                        <div>
+                            <label style={labelStyle}>Conclusion Title <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional)</span></label>
+                            <input name="conclusionTitle" value={form.conclusionTitle} onChange={handleChange} style={inputStyle} placeholder="Conclusion Title (optional)" />
+                        </div>
+
+                        <div>
+                            <label style={labelStyle}>Conclusion Content <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional)</span></label>
+                            <textarea name="conclusionContent" rows={4} value={form.conclusionContent} onChange={handleChange} style={textareaStyle} placeholder="Conclusion paragraph (optional)" />
                         </div>
 
                         <div>

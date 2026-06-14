@@ -21,18 +21,20 @@ export default function EditInsightPage({ params }) {
             .then((data) => {
                 if (data.error) throw new Error(data.error);
                 setForm({
-                    title:         data.title         ?? '',
-                    slug:          data.slug          ?? '',
-                    excerpt:       data.excerpt       ?? '',
-                    content:       data.content       ?? '',
-                    category:      data.category      ?? CATEGORIES[0],
-                    author:        data.author        ?? '',
-                    coverImage:    data.coverImage    ?? '',
-                    featured:      data.featured      ?? false,
-                    keyTakeaways:  Array.isArray(data.keyTakeaways) ? data.keyTakeaways.join('\n') : (data.keyTakeaways ?? ''),
-                    tags:          Array.isArray(data.tags) ? data.tags.join(', ') : (data.tags ?? ''),
-                    articleImage1: (data.articleImages && data.articleImages[0]) ? data.articleImages[0] : '',
-                    articleImage2: (data.articleImages && data.articleImages[1]) ? data.articleImages[1] : '',
+                    title:             data.title             ?? '',
+                    slug:              data.slug              ?? '',
+                    excerpt:           data.excerpt           ?? '',
+                    content:           data.content           ?? '',
+                    category:          data.category          ?? CATEGORIES[0],
+                    author:            data.author            ?? '',
+                    coverImage:        data.coverImage        ?? '',
+                    featured:          data.featured          ?? false,
+                    keyTakeaways:      Array.isArray(data.keyTakeaways) ? data.keyTakeaways.join('\n') : (data.keyTakeaways ?? ''),
+                    tags:              Array.isArray(data.tags) ? data.tags.join(', ') : (data.tags ?? ''),
+                    articleImage1:     (data.articleImages && data.articleImages[0]) ? data.articleImages[0] : '',
+                    articleImage2:     (data.articleImages && data.articleImages[1]) ? data.articleImages[1] : '',
+                    conclusionTitle:   data.conclusionTitle   ?? '',
+                    conclusionContent: data.conclusionContent ?? '',
                 });
             })
             .catch((err) => setError(err.message))
@@ -132,6 +134,16 @@ export default function EditInsightPage({ params }) {
                             <div>
                                 <label style={labelStyle}>Content *</label>
                                 <textarea name="content" required rows={8} value={form.content} onChange={handleChange} style={textareaStyle} />
+                            </div>
+
+                            <div>
+                                <label style={labelStyle}>Conclusion Title <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional)</span></label>
+                                <input name="conclusionTitle" value={form.conclusionTitle} onChange={handleChange} style={inputStyle} placeholder="Conclusion Title (optional)" />
+                            </div>
+
+                            <div>
+                                <label style={labelStyle}>Conclusion Content <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional)</span></label>
+                                <textarea name="conclusionContent" rows={4} value={form.conclusionContent} onChange={handleChange} style={textareaStyle} placeholder="Conclusion paragraph (optional)" />
                             </div>
 
                             <div>
