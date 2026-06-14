@@ -1,0 +1,22 @@
+[
+  {
+    "img": "/assets/images/inner/team-inner.png",
+    "title": "Daniel Mwangi",
+    "desc": "STRATEGY DIRECTOR"
+  },
+  {
+    "img": "/assets/images/inner/team-inner2.png",
+    "title": "Amina Odhiambo",
+    "desc": "BRAND STRATEGIST"
+  },
+  {
+    "img": "/assets/images/inner/team-inner-3.png",
+    "title": "Kevin Kariuki",
+    "desc": "GROWTH ANALYST"
+  },
+  {
+    "img": "/assets/images/inner/team-inner4.png",
+    "title": "Lilian Wanjiru",
+    "desc": "COMMUNICATIONS LEAD"
+  }
+]

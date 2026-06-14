@@ -1,0 +1,32 @@
+[
+  {
+    "img": "/assets/images/inner/case-thumb.png",
+    "title": "Brand Repositioning",
+    "category": "Strategy"
+  },
+  {
+    "img": "/assets/images/inner/case-thumb2.png",
+    "title": "Demand Generation",
+    "category": "Growth"
+  },
+  {
+    "img": "/assets/images/inner/case-thumb3.png",
+    "title": "Market Entry",
+    "category": "Intelligence"
+  },
+  {
+    "img": "/assets/images/inner/case-thumb4.png",
+    "title": "Narrative Design",
+    "category": "Branding"
+  },
+  {
+    "img": "/assets/images/inner/case-thumb5.png",
+    "title": "Media Integration",
+    "category": "Experiential"
+  },
+  {
+    "img": "/assets/images/inner/case-thumb6.png",
+    "title": "Conversion Optimization",
+    "category": "Digital"
+  }
+]

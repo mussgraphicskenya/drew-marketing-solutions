@@ -1,0 +1,29 @@
+{
+  "name": "solutek",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "cloudinary": "^2.10.0",
+    "dotenv": "^17.4.2",
+    "html-react-parser": "^5.1.15",
+    "mongoose": "^9.7.0",
+    "next": "14.2.8",
+    "react": "^18",
+    "react-bootstrap": "^2.10.4",
+    "react-dom": "^18",
+    "react-slick": "^0.30.2",
+    "slick-carousel": "^1.8.1"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.8"
+  }
+}

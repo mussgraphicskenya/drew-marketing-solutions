@@ -1,0 +1,20 @@
+[
+  {
+    "icon": "/assets/images/home-3/ser-icon.png",
+    "title": "Brand Positioning",
+    "desc": "Clarity in positioning leads to stronger connection and conversion.",
+    "image": "/assets/images/home-3/ser-thumb.png"
+  },
+  {
+    "icon": "/assets/images/home-3/ser-icon2.png",
+    "title": "Demand Generation",
+    "desc": "Structured systems that attract nurture and convert right audiences.",
+    "image": "/assets/images/home-3/ser-thumb2.png"
+  },
+  {
+    "icon": "/assets/images/home-3/ser-icon3.png",
+    "title": "Media Integration",
+    "desc": "Your brand showing up strategically across every relevant channel.",
+    "image": "/assets/images/home-3/ser-thumb3.png"
+  }
+]

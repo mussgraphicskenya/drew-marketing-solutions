@@ -1,0 +1,26 @@
+[
+  {
+    "icon": "/assets/images/inner/service-icon.png",
+    "title": "Market Intelligence",
+    "desc": "Research and data identifying your clearest growth path.",
+    "image": "/assets/images/inner/service-thumb1.png"
+  },
+  {
+    "icon": "/assets/images/inner/service-icon.png",
+    "title": "Brand Positioning",
+    "desc": "Defining how your brand is understood not seen.",
+    "image": "/assets/images/inner/service-thumb2.png"
+  },
+  {
+    "icon": "/assets/images/inner/service-icon.png",
+    "title": "Demand Generation",
+    "desc": "Systems that attract nurture and convert right audiences.",
+    "image": "/assets/images/inner/service-thumb3.png"
+  },
+  {
+    "icon": "/assets/images/inner/service-icon.png",
+    "title": "Growth Optimization",
+    "desc": "Every marketing effort tied to measurable business outcomes.",
+    "image": "/assets/images/inner/service-thumb4.png"
+  }
+]

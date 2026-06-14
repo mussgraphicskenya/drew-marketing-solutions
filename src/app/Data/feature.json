@@ -1,0 +1,27 @@
+[
+  {
+    "img": "/assets/images/feature1.png",
+    "title": "Market Intelligence",
+    "desc": "Research and data drives our strategy."
+  },
+  {
+    "img": "/assets/images/feature2.png",
+    "title": "Brand Positioning",
+    "desc": "Be understood not just seen."
+  },
+  {
+    "img": "/assets/images/feature3.png",
+    "title": "Demand Generation",
+    "desc": "Turn attention into real opportunity."
+  },
+  {
+    "img": "/assets/images/feature4.png",
+    "title": "Media Integration",
+    "desc": "Show up where it matters."
+  },
+  {
+    "img": "/assets/images/feature5.png",
+    "title": "Growth Optimization",
+    "desc": "Every effort tied to measurable outcomes."
+  }
+]

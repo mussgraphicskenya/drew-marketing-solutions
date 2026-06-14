@@ -1,0 +1,30 @@
+[
+  {
+    "icon": "/assets/images/service1.png",
+    "title": "Market Intelligence & Strategy",
+    "desc": "We use research and data to identify your clearest growth path.",
+    "btnText": "READ MORE",
+    "btnLink": "/service/service-details"
+  },
+  {
+    "icon": "/assets/images/service2.png",
+    "title": "Brand Positioning & Narrative",
+    "desc": "We define how your brand is understood not just seen.",
+    "btnText": "READ MORE",
+    "btnLink": "/service/service-details"
+  },
+  {
+    "icon": "/assets/images/service3.png",
+    "title": "Demand Generation Systems",
+    "desc": "We build systems that attract nurture and convert the right audience.",
+    "btnText": "READ MORE",
+    "btnLink": "/service/service-details"
+  },
+  {
+    "icon": "/assets/images/service4.png",
+    "title": "Growth & Conversion Optimization",
+    "desc": "We refine your marketing so every effort drives measurable business outcomes.",
+    "btnText": "READ MORE",
+    "btnLink": "/service/service-details"
+  }
+]

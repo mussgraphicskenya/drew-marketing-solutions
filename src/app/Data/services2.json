@@ -1,0 +1,17 @@
+[
+  {
+    "img": "/assets/images/home-two/service-icon.png",
+    "title": "Market Intelligence",
+    "desc": "We start with insight not assumptions. Research drives every strategy we build."
+  },
+  {
+    "img": "/assets/images/home-two/service-icon2.png",
+    "title": "Brand Positioning",
+    "desc": "We define your positioning so your audience connects with you not just sees you."
+  },
+  {
+    "img": "/assets/images/home-two/ser-icon3.png",
+    "title": "Demand Generation",
+    "desc": "We build structured systems that attract nurture and convert the right audience consistently."
+  }
+]
