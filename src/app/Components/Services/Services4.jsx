@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from 'next/cache';
 import SectionTitle from "../Common/SectionTitle";
 import Link from "next/link";
 import Image from "next/image";
@@ -21,6 +22,7 @@ const Solution =
     mongoose.models.Solution || mongoose.model("Solution", solutionSchema);
 
 const Services4 = async () => {
+    noStore();
     await connectDB();
     const data = await Solution.find({}).sort({ order: 1 }).lean();
 

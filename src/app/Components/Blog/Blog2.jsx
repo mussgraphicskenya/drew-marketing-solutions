@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from 'next/cache';
 import Link from 'next/link';
 import SectionTitle from "../Common/SectionTitle";
 import Image from 'next/image';
@@ -5,6 +6,7 @@ import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
 
 const Blog2 = async () => {
+    noStore();
     await connectDB();
     const data = await mongoose.connection
         .collection('insights')

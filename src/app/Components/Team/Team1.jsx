@@ -1,9 +1,11 @@
+import { unstable_noStore as noStore } from 'next/cache';
 import Image from 'next/image';
 import SectionTitle from '../Common/SectionTitle';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
 
 const Team1 = async () => {
+    noStore();
     await connectDB();
     const docs = await mongoose.connection
         .collection('teams')

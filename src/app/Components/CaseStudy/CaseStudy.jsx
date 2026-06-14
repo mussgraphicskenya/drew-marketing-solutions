@@ -1,9 +1,11 @@
+import { unstable_noStore as noStore } from 'next/cache';
 import Image from "next/image";
 import Link from "next/link";
 import connectDB from "@/lib/mongodb";
 import mongoose from "mongoose";
 
 const CaseStudy = async () => {
+    noStore();
     await connectDB();
     const data = await mongoose.connection.collection("casestudies").find({}).limit(3).toArray();
 

@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from 'next/cache';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
 import Link from 'next/link';
@@ -7,6 +8,7 @@ import MarkReadButton from '@/app/Components/Admin/MarkReadButton';
 export const metadata = { title: 'Messages | Drew Admin' };
 
 export default async function MessagesPage() {
+    noStore();
     await connectDB();
 
     // Sort: unread first, then by newest

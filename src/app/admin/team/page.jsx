@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from 'next/cache';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
 import Link from 'next/link';
@@ -6,6 +7,7 @@ import DeleteButton from '../DeleteButton';
 export const metadata = { title: 'Team | Drew Admin' };
 
 export default async function TeamPage() {
+    noStore();
     await connectDB();
     const docs = await mongoose.connection
         .collection('teams')

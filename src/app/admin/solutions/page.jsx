@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from 'next/cache';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
 import Link from 'next/link';
@@ -8,6 +9,7 @@ export const metadata = { title: 'Solutions | Drew Admin' };
 
 
 export default async function SolutionsPage() {
+    noStore();
     await connectDB();
     const docs = await mongoose.connection
         .collection('solutions')

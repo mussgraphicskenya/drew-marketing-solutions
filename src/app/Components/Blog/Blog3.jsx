@@ -1,9 +1,11 @@
+import { unstable_noStore as noStore } from 'next/cache';
 import Link from 'next/link';
 import Image from 'next/image';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
 
 const Blog3 = async ({ category }) => {
+    noStore();
     await connectDB();
 
     // Build filter — if a category is passed, filter by it; otherwise fetch all
