@@ -21,14 +21,18 @@ export default function EditInsightPage({ params }) {
             .then((data) => {
                 if (data.error) throw new Error(data.error);
                 setForm({
-                    title:      data.title      ?? '',
-                    slug:       data.slug       ?? '',
-                    excerpt:    data.excerpt    ?? '',
-                    content:    data.content    ?? '',
-                    category:   data.category   ?? CATEGORIES[0],
-                    author:     data.author     ?? '',
-                    coverImage: data.coverImage ?? '',
-                    featured:   data.featured   ?? false,
+                    title:         data.title         ?? '',
+                    slug:          data.slug          ?? '',
+                    excerpt:       data.excerpt       ?? '',
+                    content:       data.content       ?? '',
+                    category:      data.category      ?? CATEGORIES[0],
+                    author:        data.author        ?? '',
+                    coverImage:    data.coverImage    ?? '',
+                    featured:      data.featured      ?? false,
+                    keyTakeaways:  Array.isArray(data.keyTakeaways) ? data.keyTakeaways.join('\n') : (data.keyTakeaways ?? ''),
+                    tags:          Array.isArray(data.tags) ? data.tags.join(', ') : (data.tags ?? ''),
+                    articleImage1: (data.articleImages && data.articleImages[0]) ? data.articleImages[0] : '',
+                    articleImage2: (data.articleImages && data.articleImages[1]) ? data.articleImages[1] : '',
                 });
             })
             .catch((err) => setError(err.message))
@@ -45,10 +49,18 @@ export default function EditInsightPage({ params }) {
         setLoading(true);
         setError('');
         try {
+            const payload = {
+                ...form,
+                keyTakeaways: form.keyTakeaways.split('\n').map((s) => s.trim()).filter(Boolean),
+                tags: form.tags.split(',').map((s) => s.trim()).filter(Boolean),
+                articleImages: [form.articleImage1, form.articleImage2].filter(Boolean),
+            };
+            delete payload.articleImage1;
+            delete payload.articleImage2;
             const res = await fetch(`/api/admin/insights/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(form),
+                body: JSON.stringify(payload),
             });
             if (!res.ok) {
                 const data = await res.json();
@@ -129,6 +141,34 @@ export default function EditInsightPage({ params }) {
                                     onChange={(url) => setForm((p) => ({ ...p, coverImage: url }))}
                                     type="insight"
                                 />
+                            </div>
+
+                            <div>
+                                <label style={labelStyle}>Article Image 1 <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional)</span></label>
+                                <ImageUpload
+                                    value={form.articleImage1}
+                                    onChange={(url) => setForm((p) => ({ ...p, articleImage1: url }))}
+                                    type="insight"
+                                />
+                            </div>
+
+                            <div>
+                                <label style={labelStyle}>Article Image 2 <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional)</span></label>
+                                <ImageUpload
+                                    value={form.articleImage2}
+                                    onChange={(url) => setForm((p) => ({ ...p, articleImage2: url }))}
+                                    type="insight"
+                                />
+                            </div>
+
+                            <div>
+                                <label style={labelStyle}>Key Takeaways <span style={{ color: '#5a6070', fontWeight: 400 }}>(one per line)</span></label>
+                                <textarea name="keyTakeaways" rows={4} value={form.keyTakeaways} onChange={handleChange} style={textareaStyle} />
+                            </div>
+
+                            <div>
+                                <label style={labelStyle}>Tags <span style={{ color: '#5a6070', fontWeight: 400 }}>(comma separated)</span></label>
+                                <input name="tags" value={form.tags} onChange={handleChange} style={inputStyle} placeholder="Strategy, Branding, Growth" />
                             </div>
 
                             <div className="d-flex align-items-center gap-2">

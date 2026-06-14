@@ -8,7 +8,10 @@ const InsightSchema = new mongoose.Schema({
     category: { type: String, required: true },
     author: { type: String, required: true },
     coverImage: { type: String },
-    featured: { type: Boolean, default: false }
+    featured: { type: Boolean, default: false },
+    keyTakeaways: [String],
+    articleImages: [String],
+    tags: [String],
 }, { timestamps: true });
 
 export default mongoose.models.Insight || mongoose.model('Insight', InsightSchema);

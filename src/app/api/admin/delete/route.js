@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
 
-const ALLOWED_COLLECTIONS = ['insights', 'casestudies', 'solutions', 'testimonials', 'teams', 'messages'];
+const ALLOWED_COLLECTIONS = ['insights', 'casestudies', 'solutions', 'testimonials', 'teams', 'messages', 'comments'];
 
 export async function POST(request) {
     try {

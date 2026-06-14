@@ -12,6 +12,7 @@ export default function NewInsightPage() {
     const [form, setForm] = useState({
         title: '', slug: '', excerpt: '', content: '',
         category: CATEGORIES[0], author: '', coverImage: '', featured: false,
+        keyTakeaways: '', tags: '', articleImage1: '', articleImage2: '',
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -30,10 +31,18 @@ export default function NewInsightPage() {
         setLoading(true);
         setError('');
         try {
+            const payload = {
+                ...form,
+                keyTakeaways: form.keyTakeaways.split('\n').map((s) => s.trim()).filter(Boolean),
+                tags: form.tags.split(',').map((s) => s.trim()).filter(Boolean),
+                articleImages: [form.articleImage1, form.articleImage2].filter(Boolean),
+            };
+            delete payload.articleImage1;
+            delete payload.articleImage2;
             const res = await fetch('/api/admin/insights', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(form),
+                body: JSON.stringify(payload),
             });
             if (!res.ok) {
                 const data = await res.json();
@@ -111,6 +120,34 @@ export default function NewInsightPage() {
                                 onChange={(url) => setForm((p) => ({ ...p, coverImage: url }))}
                                 type="insight"
                             />
+                        </div>
+
+                        <div>
+                            <label style={labelStyle}>Article Image 1 <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional)</span></label>
+                            <ImageUpload
+                                value={form.articleImage1}
+                                onChange={(url) => setForm((p) => ({ ...p, articleImage1: url }))}
+                                type="insight"
+                            />
+                        </div>
+
+                        <div>
+                            <label style={labelStyle}>Article Image 2 <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional)</span></label>
+                            <ImageUpload
+                                value={form.articleImage2}
+                                onChange={(url) => setForm((p) => ({ ...p, articleImage2: url }))}
+                                type="insight"
+                            />
+                        </div>
+
+                        <div>
+                            <label style={labelStyle}>Key Takeaways <span style={{ color: '#5a6070', fontWeight: 400 }}>(one per line)</span></label>
+                            <textarea name="keyTakeaways" rows={4} value={form.keyTakeaways} onChange={handleChange} style={textareaStyle} placeholder="Takeaway point one&#10;Takeaway point two&#10;Takeaway point three" />
+                        </div>
+
+                        <div>
+                            <label style={labelStyle}>Tags <span style={{ color: '#5a6070', fontWeight: 400 }}>(comma separated)</span></label>
+                            <input name="tags" value={form.tags} onChange={handleChange} style={inputStyle} placeholder="Strategy, Branding, Growth" />
                         </div>
 
                         <div className="d-flex align-items-center gap-2">

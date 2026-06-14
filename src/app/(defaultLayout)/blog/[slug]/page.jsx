@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import connectDB from "@/lib/mongodb";
 import mongoose from "mongoose";
+import CommentForm from "@/app/Components/Blog/CommentForm";
 
 export async function generateMetadata({ params }) {
     await connectDB();
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }) {
 const BlogDetailPage = async ({ params }) => {
     await connectDB();
 
-    const [item, recentPosts] = await Promise.all([
+    const [item, recentPosts, approvedComments] = await Promise.all([
         mongoose.connection
             .collection("insights")
             .findOne({ slug: params.slug }),
@@ -40,6 +41,11 @@ const BlogDetailPage = async ({ params }) => {
             .find({})
             .sort({ createdAt: -1 })
             .limit(3)
+            .toArray(),
+        mongoose.connection
+            .collection("comments")
+            .find({ insightSlug: params.slug, approved: true })
+            .sort({ createdAt: -1 })
             .toArray(),
     ]);
 
@@ -59,21 +65,15 @@ const BlogDetailPage = async ({ params }) => {
           })
         : "";
 
+    const pageUrl = `https://www.drewmarketingsolutions.com/blog/${item.slug}`;
+    const pageTitle = encodeURIComponent(item.title);
+
     const Services = [
         "Marketing Strategy",
         "Brand Positioning",
         "Business Growth",
         "Digital Marketing",
         "Thought Leadership",
-    ];
-
-    const BlogTag = [
-        "Strategy",
-        "Branding",
-        "Growth",
-        "Digital",
-        "Marketing",
-        "Insights",
     ];
 
     return (
@@ -113,138 +113,157 @@ const BlogDetailPage = async ({ params }) => {
                                             </div>
                                         </div>
 
-                                        <h3 className="blog-details-title">Key Takeaways</h3>
-
-                                        <p className="blog-details-desc two">{item.content}</p>
-
-                                        <div className="blog-details-list-item">
-                                            <ul>
-                                                <li><i className="bi bi-check-circle-fill"></i>Innovate wireless market</li>
-                                                <li><i className="bi bi-check-circle-fill"></i>Productivate resource sucking</li>
-                                                <li><i className="bi bi-check-circle-fill"></i>Proactively unleash oriented communities</li>
-                                                <li><i className="bi bi-check-circle-fill"></i>Credibly develop progressive archi</li>
-                                            </ul>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-lg-6 col-md-6">
-                                                <div className="blog-details-thumb two">
-                                                    <Image src="/assets/images/home-two/blog-thu2.png" alt="img" width={379} height={221} />
+                                        {/* Key Takeaways */}
+                                        {item.keyTakeaways && item.keyTakeaways.length > 0 && (
+                                            <>
+                                                <h3 className="blog-details-title">Key Takeaways</h3>
+                                                <div className="blog-details-list-item">
+                                                    <ul>
+                                                        {item.keyTakeaways.map((point, i) => (
+                                                            <li key={i}>
+                                                                <i className="bi bi-check-circle-fill"></i>
+                                                                {point}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
                                                 </div>
-                                            </div>
-                                            <div className="col-lg-6 col-md-6">
-                                                <div className="blog-details-thumb">
-                                                    <Image src="/assets/images/home-two/blog-thu3.png" alt="img" width={379} height={221} />
-                                                </div>
-                                            </div>
-                                        </div>
+                                            </>
+                                        )}
 
-                                        <h3 className="blog-details-title two">Arcu At Mauris Facilisis Fermentum</h3>
-
-                                        <p className="blog-details-desc three">{item.content}</p>
+                                        {/* Article Images */}
+                                        {item.articleImages && item.articleImages.length > 0 && (
+                                            <div className="row">
+                                                {item.articleImages.map((imgUrl, i) => (
+                                                    <div key={i} className="col-lg-6 col-md-6">
+                                                        <div className="blog-details-thumb two">
+                                                            <Image src={imgUrl} alt={`Article image ${i + 1}`} width={379} height={221} />
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
+
+                                    {/* Social share + tags */}
                                     <div className="blog-details-socila-box">
                                         <div className="row align-items-center">
                                             <div className="col-lg-6 col-md-6">
                                                 <div className="blog-details-category">
-                                                    <span><a href="#">{item.category}</a></span>
-                                                    <span><a className="active-className" href="#">Digital Marketing</a></span>
+                                                    {item.tags && item.tags.length > 0 ? (
+                                                        item.tags.map((tag, i) => (
+                                                            <span key={i}>
+                                                                <a
+                                                                    href={`/blog?tag=${encodeURIComponent(tag)}`}
+                                                                    className={i === 0 ? '' : 'active-className'}
+                                                                >
+                                                                    {tag}
+                                                                </a>
+                                                            </span>
+                                                        ))
+                                                    ) : (
+                                                        <span><a href="#">{item.category}</a></span>
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
                                                 <div className="blog-details-social-icon">
                                                     <ul>
-                                                        <li><a href="#"><i className="bi bi-facebook"></i></a></li>
-                                                        <li><a href="#"><i className="bi bi-twitter"></i></a></li>
-                                                        <li><a href="#"><i className="bi bi-linkedin"></i></a></li>
-                                                        <li><a href="#"><i className="bi bi-instagram"></i></a></li>
+                                                        <li>
+                                                            <a
+                                                                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                aria-label="Share on Facebook"
+                                                            >
+                                                                <i className="bi bi-facebook"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a
+                                                                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${pageTitle}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                aria-label="Share on Twitter"
+                                                            >
+                                                                <i className="bi bi-twitter"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a
+                                                                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                aria-label="Share on LinkedIn"
+                                                            >
+                                                                <i className="bi bi-linkedin"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a
+                                                                href={`https://wa.me/?text=${pageTitle}%20${encodeURIComponent(pageUrl)}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                aria-label="Share on WhatsApp"
+                                                            >
+                                                                <i className="bi bi-whatsapp"></i>
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    {/* Comments section */}
                                     <div className="single-comment-area">
                                         <div className="row">
                                             <div className="col-lg-12">
                                                 <div className="blog-details-comment-title">
-                                                    <h4>2 Comments</h4>
+                                                    <h4>
+                                                        {approvedComments.length}{" "}
+                                                        {approvedComments.length === 1 ? "Comment" : "Comments"}
+                                                    </h4>
                                                 </div>
-                                                <div className="blog-details-comment">
-                                                    <div className="blog-details-comment-reply">
-                                                        <a href="#">Reply</a>
+
+                                                {approvedComments.map((c, i) => (
+                                                    <div
+                                                        key={String(c._id)}
+                                                        className={`blog-details-comment${i > 0 ? " style-two" : ""}`}
+                                                    >
+                                                        <div className="blog-details-comment-thumb">
+                                                            <Image
+                                                                src="/assets/images/testi4.png"
+                                                                alt="commenter"
+                                                                width={70}
+                                                                height={70}
+                                                            />
+                                                        </div>
+                                                        <div className="blog-details-comment-content">
+                                                            <h2>{c.name}</h2>
+                                                            <span>
+                                                                {c.createdAt
+                                                                    ? new Date(c.createdAt).toLocaleDateString("en-US", {
+                                                                          day: "numeric",
+                                                                          month: "long",
+                                                                          year: "numeric",
+                                                                      })
+                                                                    : ""}
+                                                            </span>
+                                                            <p>{c.comment}</p>
+                                                        </div>
                                                     </div>
-                                                    <div className="blog-details-comment-thumb">
-                                                        <Image src="/assets/images/testi4.png" alt="img" width={70} height={70} />
-                                                    </div>
-                                                    <div className="blog-details-comment-content">
-                                                        <h2>Maria Manda</h2>
-                                                        <span>22 August, 2024</span>
-                                                        <p>Interactively visualize top-line internal or organic sources rather than top-line niche mark
-                                                            unleash 24/7 opportunities after high standards in process improvements. Uniquely deploy
-                                                            methodologies with reliable information.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className="blog-details-comment style-two">
-                                                    <div className="blog-details-comment-reply">
-                                                        <a href="#">Reply</a>
-                                                    </div>
-                                                    <div className="blog-details-comment-thumb">
-                                                        <Image src="/assets/images/testi5.png" alt="img" width={70} height={70} />
-                                                    </div>
-                                                    <div className="blog-details-comment-content">
-                                                        <h2>Johon Alex</h2>
-                                                        <span>22 August, 2024</span>
-                                                        <p>Interactively visualize top-line internal or organic sources rather than top-line niche mark
-                                                            unleash 24/7 opportunities after high standards in process.
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                                ))}
                                             </div>
                                         </div>
-                                        <div className="blog-details-contact">
-                                            <div className="blog-details-contact-title">
-                                                <h4>Leave A Comments</h4>
-                                            </div>
-                                            <form action="#">
-                                                <div className="row">
-                                                    <div className="col-lg-6">
-                                                        <div className="contact-input-box">
-                                                            <input type="text" name="Name" placeholder="Full Name*" required="" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-lg-6">
-                                                        <div className="contact-input-box">
-                                                            <input type="text" name="Email" placeholder="Email Address*" required="" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-lg-12">
-                                                        <div className="contact-input-box">
-                                                            <input type="text" name="Web Site" placeholder="Your Website*" required="" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-lg-12">
-                                                        <div className="contact-input-box">
-                                                            <textarea name="Message" id="Meassage" placeholder="Write Comments..."></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-lg-12">
-                                                        <div className="input-check-box">
-                                                            <input type="checkbox" />
-                                                            <span>Save your email info in the browser for next comments.</span>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-lg-12">
-                                                        <div className="blog-details-submi-button">
-                                                            <button type="submit">Post Comments</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
+
+                                        {/* Comment submission form (client component) */}
+                                        <CommentForm insightSlug={params.slug} />
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        {/* Sidebar */}
                         <div className="col-lg-4">
                             <div className="row">
                                 <div className="col-lg-12">
@@ -309,8 +328,11 @@ const BlogDetailPage = async ({ params }) => {
                                             <h4>Tags</h4>
                                         </div>
                                         <div className="widget-catefories-tags">
-                                            {BlogTag.map((tag, i) => (
-                                                <a href="#" key={i}>{tag}</a>
+                                            {(item.tags && item.tags.length > 0
+                                                ? item.tags
+                                                : ["Strategy", "Branding", "Growth", "Digital", "Marketing", "Insights"]
+                                            ).map((tag, i) => (
+                                                <a href={`/blog?tag=${encodeURIComponent(tag)}`} key={i}>{tag}</a>
                                             ))}
                                         </div>
                                     </div>

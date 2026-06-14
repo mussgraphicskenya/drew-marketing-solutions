@@ -79,25 +79,38 @@ const COLLECTIONS = [
         bg:          'rgba(232,121,249,0.12)',
         href:        '/admin/team',
     },
+    {
+        key:         'comments',
+        label:       'Comments',
+        description: 'Blog comment moderation queue',
+        icon:        'bi-chat-dots-fill',
+        color:       '#a78bfa',
+        bg:          'rgba(167,139,250,0.12)',
+        href:        '/admin/comments',
+    },
 ];
 
 export default async function AdminDashboard() {
     await connectDB();
 
     // Fetch all collection counts in parallel
-    const [counts, unreadCount] = await Promise.all([
+    const [counts, unreadCount, pendingComments] = await Promise.all([
         Promise.all(
             COLLECTIONS.map((col) =>
-                mongoose.connection.collection(col.key).countDocuments()
+                col.key === 'comments'
+                    ? mongoose.connection.collection('comments').countDocuments({ approved: false })
+                    : mongoose.connection.collection(col.key).countDocuments()
             )
         ),
         mongoose.connection.collection('messages').countDocuments({ read: { $ne: true } }),
+        mongoose.connection.collection('comments').countDocuments({ approved: false }),
     ]);
 
     const collections = COLLECTIONS.map((col, i) => ({
         ...col,
         count:       counts[i],
-        unreadCount: col.key === 'messages' ? unreadCount : 0,
+        unreadCount: col.key === 'messages' ? unreadCount : col.key === 'comments' ? pendingComments : 0,
+        badgeLabel:  col.key === 'comments' ? 'pending' : 'unread',
     }));
     const total = counts.reduce((a, b) => a + b, 0);
 
@@ -292,7 +305,7 @@ export default async function AdminDashboard() {
                                     {col.unreadCount > 0 && (
                                         <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '8px', background: 'rgba(255,60,0,0.15)', color: '#ff7c5c', fontSize: '12px', fontWeight: 700, padding: '3px 10px', borderRadius: '20px' }}>
                                             <i className="bi bi-envelope-exclamation-fill"></i>
-                                            {col.unreadCount} unread
+                                            {col.unreadCount} {col.badgeLabel || 'unread'}
                                         </span>
                                     )}
                                 </div>
