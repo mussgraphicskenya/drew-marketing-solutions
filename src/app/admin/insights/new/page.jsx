@@ -14,6 +14,7 @@ export default function NewInsightPage() {
         category: CATEGORIES[0], author: '', coverImage: '', featured: false,
         keyTakeaways: '', tags: '', articleImage1: '', articleImage2: '',
         conclusionTitle: '', conclusionContent: '',
+        quote: '', quoteAuthor: '',
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -107,6 +108,16 @@ export default function NewInsightPage() {
                         <div>
                             <label style={labelStyle}>Excerpt * <span style={{ color: '#5a6070', fontWeight: 400 }}>(short summary)</span></label>
                             <textarea name="excerpt" required rows={2} value={form.excerpt} onChange={handleChange} style={textareaStyle} placeholder="One or two sentences summarising the insight..." />
+                        </div>
+
+                        <div>
+                            <label style={labelStyle}>Pull Quote <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional)</span></label>
+                            <textarea name="quote" rows={3} value={form.quote} onChange={handleChange} style={textareaStyle} placeholder="Pull quote (optional) - a highlighted quote from the article" />
+                        </div>
+
+                        <div>
+                            <label style={labelStyle}>Quote Author <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional, defaults to article author)</span></label>
+                            <input name="quoteAuthor" value={form.quoteAuthor} onChange={handleChange} style={inputStyle} placeholder="Quote author (optional, defaults to article author)" />
                         </div>
 
                         <div>

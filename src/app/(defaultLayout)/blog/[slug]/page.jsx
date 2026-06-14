@@ -103,15 +103,19 @@ const BlogDetailPage = async ({ params }) => {
 
                                         <p className="blog-details-desc">{item.content}</p>
 
-                                        <div className="blog-details-author-talk">
-                                            <div className="blog-details-quote">
-                                                <Image src="/assets/images/testi1.png" alt="img" width={23} height={17} />
+                                        {/* Pullquote — only shown when a quote is provided */}
+                                        {item.quote && (
+                                            <div className="blog-details-author-talk">
+                                                <div className="blog-details-quote">
+                                                    <Image src="/assets/images/testi1.png" alt="img" width={23} height={17} />
+                                                </div>
+                                                <div className="blog-details-author-title">
+                                                    <p>{item.quote}</p>
+                                                    <span>{item.quoteAuthor || item.author}</span>
+                                                </div>
                                             </div>
-                                            <div className="blog-details-author-title">
-                                                <p>{item.excerpt}</p>
-                                                <span>{item.author}</span>
-                                            </div>
-                                        </div>
+                                        )}
+
 
                                         {/* Key Takeaways */}
                                         {item.keyTakeaways && item.keyTakeaways.length > 0 && (

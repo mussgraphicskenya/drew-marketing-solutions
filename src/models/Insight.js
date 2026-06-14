@@ -14,6 +14,9 @@ const InsightSchema = new mongoose.Schema({
     tags: [String],
     conclusionTitle: { type: String },
     conclusionContent: { type: String },
+    quote: { type: String },
+    quoteAuthor: { type: String },
+
 
 }, { timestamps: true });
 

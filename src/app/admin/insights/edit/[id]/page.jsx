@@ -35,6 +35,8 @@ export default function EditInsightPage({ params }) {
                     articleImage2:     (data.articleImages && data.articleImages[1]) ? data.articleImages[1] : '',
                     conclusionTitle:   data.conclusionTitle   ?? '',
                     conclusionContent: data.conclusionContent ?? '',
+                    quote:             data.quote             ?? '',
+                    quoteAuthor:       data.quoteAuthor       ?? '',
                 });
             })
             .catch((err) => setError(err.message))
@@ -129,6 +131,16 @@ export default function EditInsightPage({ params }) {
                             <div>
                                 <label style={labelStyle}>Excerpt *</label>
                                 <textarea name="excerpt" required rows={2} value={form.excerpt} onChange={handleChange} style={textareaStyle} />
+                            </div>
+
+                            <div>
+                                <label style={labelStyle}>Pull Quote <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional)</span></label>
+                                <textarea name="quote" rows={3} value={form.quote} onChange={handleChange} style={textareaStyle} placeholder="Pull quote (optional) - a highlighted quote from the article" />
+                            </div>
+
+                            <div>
+                                <label style={labelStyle}>Quote Author <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional, defaults to article author)</span></label>
+                                <input name="quoteAuthor" value={form.quoteAuthor} onChange={handleChange} style={inputStyle} placeholder="Quote author (optional, defaults to article author)" />
                             </div>
 
                             <div>
