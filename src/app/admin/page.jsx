@@ -114,7 +114,7 @@ export default async function AdminDashboard() {
                 style={{
                     background:     'rgba(255,255,255,0.03)',
                     borderBottom:   '1px solid rgba(255,255,255,0.07)',
-                    padding:        '0 32px',
+                    padding:        '0 16px',
                     height:         '64px',
                     display:        'flex',
                     alignItems:     'center',
@@ -123,6 +123,7 @@ export default async function AdminDashboard() {
                     top:             0,
                     zIndex:          100,
                     backdropFilter: 'blur(12px)',
+                    gap:            '12px',
                 }}
             >
                 <div className="d-flex align-items-center gap-3">
@@ -197,7 +198,7 @@ export default async function AdminDashboard() {
             </nav>
 
             {/* ── Page Body ────────────────────────────────────── */}
-            <main style={{ padding: '40px 32px', maxWidth: '1100px', margin: '0 auto' }}>
+            <main style={{ padding: '24px 16px', maxWidth: '1100px', margin: '0 auto' }}>
 
                 {/* Header */}
                 <div className="mb-5">
@@ -211,23 +212,28 @@ export default async function AdminDashboard() {
 
                 {/* Summary strip */}
                 <div
-                    className="d-flex align-items-center gap-3 mb-5 p-4"
                     style={{
                         background:   'rgba(255,255,255,0.04)',
                         border:       '1px solid rgba(255,255,255,0.08)',
                         borderRadius: '12px',
+                        padding:      '20px',
+                        marginBottom: '32px',
                     }}
                 >
-                    <i className="bi bi-database-fill-check" style={{ color: '#ff3c00', fontSize: '28px' }}></i>
-                    <div>
-                        <div style={{ color: '#fff', fontWeight: 700, fontSize: '22px' }}>{total} Documents</div>
-                        <div style={{ color: '#9aa0b4', fontSize: '13px' }}>Total records in MongoDB</div>
+                    {/* Total count row */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                        <i className="bi bi-database-fill-check" style={{ color: '#ff3c00', fontSize: '26px', flexShrink: 0 }}></i>
+                        <div>
+                            <div style={{ color: '#fff', fontWeight: 700, fontSize: '20px' }}>{total} Documents</div>
+                            <div style={{ color: '#9aa0b4', fontSize: '13px' }}>Total records in MongoDB</div>
+                        </div>
                     </div>
-                    <div style={{ marginLeft: 'auto', display: 'flex', gap: '24px' }}>
+                    {/* Per-collection mini stats — wraps on mobile */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px 20px', borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: '16px' }}>
                         {collections.map((col) => (
-                            <div key={col.key} style={{ textAlign: 'center' }}>
-                                <div style={{ color: col.color, fontWeight: 700, fontSize: '20px' }}>{col.count}</div>
-                                <div style={{ color: '#9aa0b4', fontSize: '12px' }}>{col.label}</div>
+                            <div key={col.key} style={{ textAlign: 'center', minWidth: '52px' }}>
+                                <div style={{ color: col.color, fontWeight: 700, fontSize: '18px' }}>{col.count}</div>
+                                <div style={{ color: '#9aa0b4', fontSize: '11px' }}>{col.label}</div>
                             </div>
                         ))}
                     </div>
