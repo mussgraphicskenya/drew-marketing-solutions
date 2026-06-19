@@ -23,6 +23,17 @@ const solutionSchema = new mongoose.Schema(
 const Solution =
     mongoose.models.Solution || mongoose.model("Solution", solutionSchema);
 
+// Fallback thumb images — one per slot, cycling with i % 4
+const thumbs = [
+    '/assets/images/inner/service-thumb1.png',
+    '/assets/images/inner/service-thumb2.png',
+    '/assets/images/inner/service-thumb3.png',
+    '/assets/images/inner/service-thumb4.png',
+];
+
+// Single icon file confirmed present in /assets/images/inner/
+const FALLBACK_ICON = '/assets/images/inner/service-icon.png';
+
 const Services4 = async () => {
     noStore();
     await connectDB();
@@ -31,14 +42,63 @@ const Services4 = async () => {
     return (
         <>
             <style>{`
-                .single-service-box .service-content {
-                    padding-top: 60px !important;
+                /* ── Equal-height cards ── */
+                .sservice-area.style-two .row {
+                    display: flex;
+                    flex-wrap: wrap;
                 }
-                .single-service-box .service-title a {
-                    font-size: 15px !important;
-                    line-height: 1.3 !important;
+                .sservice-area.style-two .col-xl-3,
+                .sservice-area.style-two .col-lg-4,
+                .sservice-area.style-two .col-md-6 {
+                    display: flex;
+                    flex-direction: column;
+                }
+                .sservice-area.style-two .single-service-box {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                }
+                .sservice-area.style-two .service-content {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                    padding: 37px 10px 0 28px;
+                }
+
+                /* ── Thumb: fill the card width correctly ── */
+                .sservice-area.style-two .service-thumb {
+                    overflow: hidden;
+                }
+                .sservice-area.style-two .service-thumb img {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                }
+
+                /* ── Icon: flex-centre instead of line-height trick ── */
+                .sservice-area.style-two .service-icon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    line-height: 1;
+                }
+
+                /* ── Title: min-height prevents layout shift with long names ── */
+                .sservice-area.style-two h3.service-title {
+                    font-size: 20px !important;
+                    line-height: 1.35 !important;
+                    min-height: 54px;
+                    display: flex;
+                    align-items: flex-start;
+                    margin-bottom: 4px !important;
+                }
+
+                /* ── Description grows to fill remaining card space ── */
+                .sservice-area.style-two p.service-text {
+                    flex: 1;
                 }
             `}</style>
+
             <div className="sservice-area style-two">
                 <div className="container">
                     <div className="row align-items-center">
@@ -50,22 +110,39 @@ const Services4 = async () => {
                                 ></SectionTitle>
                             </div>
                         </div>
+
                         {data.map((item, i) => (
                             <div key={i} className="col-xl-3 col-lg-4 col-md-6">
                                 <div className="single-service-box">
+
+                                    {/* ── Service thumb image — plain img so width:100% applies ── */}
                                     <div className="service-thumb">
-                                        <Image
-                                            src={item.image || "/assets/images/inner/service-thumb1.png"}
-                                            alt="img"
+                                        <img
+                                            src={item.image || thumbs[i % 4]}
+                                            alt={item.title || 'service'}
                                             width={306}
                                             height={204}
+                                            style={{ width: '100%', height: 'auto', display: 'block' }}
                                         />
                                     </div>
+
+                                    {/* ── Orange circle icon — plain img with invert for white icon ── */}
                                     <div className="service-icon">
-                                        {item.icon && (
-                                            <Image src={item.icon} alt="img" width={35} height={35} />
-                                        )}
+                                        <img
+                                            src={item.icon || FALLBACK_ICON}
+                                            alt="service icon"
+                                            width={35}
+                                            height={35}
+                                            style={{
+                                                width: '35px',
+                                                height: '35px',
+                                                objectFit: 'contain',
+                                                filter: 'brightness(0) invert(1)',
+                                            }}
+                                        />
                                     </div>
+
+                                    {/* ── Text content ── */}
                                     <div className="service-content">
                                         <h3 className="service-title">
                                             <Link href={`/service/${item.slug || '#'}`}>{item.title}</Link>
@@ -80,10 +157,13 @@ const Services4 = async () => {
                                             <Image src="/assets/images/inner/serice-shape.png" alt="img" width={18} height={18} />
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         ))}
                     </div>
+
+                    {/* Background decorative shapes — kept as next/image since they are static and fixed-size */}
                     <div className="service-shape bounce-animate3">
                         <Image src="/assets/images/service5.png" alt="img" width={199} height={420} />
                     </div>
