@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import ImageUpload from '@/app/Components/Admin/ImageUpload';
 
 export default function EditSolutionPage({ params }) {
     const { id } = params;
@@ -19,10 +20,12 @@ export default function EditSolutionPage({ params }) {
                 if (data.error) throw new Error(data.error);
                 setForm({
                     title:    data.title    ?? '',
+                    slug:     data.slug     ?? '',
                     headline: data.headline ?? '',
                     body:     data.body     ?? '',
                     includes: Array.isArray(data.includes) ? data.includes.join(', ') : '',
                     icon:     data.icon     ?? '',
+                    image:    data.image    ?? '',
                     order:    data.order    ?? 1,
                 });
             })
@@ -89,9 +92,13 @@ export default function EditSolutionPage({ params }) {
                         <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '28px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
                             <div className="row g-3">
-                                <div className="col-lg-10">
+                                <div className="col-lg-8">
                                     <label style={labelStyle}>Title *</label>
                                     <input name="title" required value={form.title} onChange={handleChange} style={inputStyle} />
+                                </div>
+                                <div className="col-lg-2">
+                                    <label style={labelStyle}>Slug *</label>
+                                    <input name="slug" required value={form.slug} onChange={handleChange} style={inputStyle} placeholder="market-intelligence-strategy" />
                                 </div>
                                 <div className="col-lg-2">
                                     <label style={labelStyle}>Order *</label>
@@ -115,8 +122,21 @@ export default function EditSolutionPage({ params }) {
                             </div>
 
                             <div>
-                                <label style={labelStyle}>Icon URL</label>
-                                <input name="icon" value={form.icon} onChange={handleChange} style={inputStyle} />
+                                <label style={labelStyle}>Card / Detail Image <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional, 306×204)</span></label>
+                                <ImageUpload
+                                    value={form.image}
+                                    onChange={(url) => setForm((p) => ({ ...p, image: url }))}
+                                    type="solution-image"
+                                />
+                            </div>
+
+                            <div>
+                                <label style={labelStyle}>Icon <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional, 35×35)</span></label>
+                                <ImageUpload
+                                    value={form.icon}
+                                    onChange={(url) => setForm((p) => ({ ...p, icon: url }))}
+                                    type="solution-icon"
+                                />
                             </div>
                         </div>
 

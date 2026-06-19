@@ -3,11 +3,12 @@ import cloudinary from '@/lib/cloudinary';
 
 // Transformation presets keyed by upload type
 const TRANSFORMS = {
-    'case-study':    [{ width: 606,  height: 447, crop: 'fill', gravity: 'auto' }],
-    'insight':       [{ width: 364,  height: 248, crop: 'fill', gravity: 'auto' }],
-    'testimonial':   [{ width: 330,  height: 370, crop: 'fill', gravity: 'auto' }],
-    'solution-icon': [{ width: 35,   height: 35,  crop: 'fill', gravity: 'auto' }],
-    'team':          [{ width: 306,  height: 388, crop: 'fill', gravity: 'auto' }],
+    'case-study':     [{ width: 606,  height: 447, crop: 'fill', gravity: 'auto' }],
+    'insight':        [{ width: 364,  height: 248, crop: 'fill', gravity: 'auto' }],
+    'testimonial':    [{ width: 330,  height: 370, crop: 'fill', gravity: 'auto' }],
+    'solution-image': [{ width: 306,  height: 204, crop: 'fill', gravity: 'auto' }],
+    'solution-icon':  [{ width: 35,   height: 35,  crop: 'fill', gravity: 'auto' }],
+    'team':           [{ width: 306,  height: 388, crop: 'fill', gravity: 'auto' }],
 };
 
 export async function POST(request) {
