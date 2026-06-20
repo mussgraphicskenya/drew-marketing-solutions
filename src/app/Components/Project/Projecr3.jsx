@@ -1,77 +1,36 @@
-"use client"
-import { useState } from 'react';
-import data from '../../Data/project3.json';
-import Link from 'next/link';
-import Image from 'next/image';
+import { unstable_noStore as noStore } from 'next/cache';
+import connectDB from '@/lib/mongodb';
+import mongoose from 'mongoose';
+import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
+import Projecr3Client from './Projecr3Client';
 
-const Projecr3 = () => {
+/**
+ * Server wrapper — fetches all case studies from MongoDB,
+ * extracts distinct industries, then passes everything to the
+ * client component for interactive category filtering.
+ */
+const Projecr3 = async () => {
+    noStore();
+    await connectDB();
 
-    const categoryMenu = [
-        {
-          title: 'Marketing',
-          category: 'Marketing',
-        },
-        {
-          title: 'Software',
-          category: 'Software',
-        },
-        {
-          title: 'Technology',
-          category: 'Technology',
-        },
-        {
-          title: 'Helpdesk',
-          category: 'Helpdesk',
-        },
-      ];
+    const raw = await mongoose.connection
+        .collection('casestudies')
+        .find({})
+        .sort({ createdAt: -1 })
+        .toArray();
 
-      const [active, setActive] = useState('all');
+    const data = raw.map((item) => ({
+        _id:        String(item._id),
+        title:      item.title    || '',
+        category:   item.industry || 'General',
+        slug:       item.slug     || '',
+        img:        getCloudinaryUrl(item.coverImage, 606, 447) || '/assets/images/home-3/case-studies.png',
+    }));
 
-    return (
-        <div className="case-study-area project-main-area">
-		<div className="container">
-			<div className="row case-study-bg">
-				<div className="col-lg-12 col-sm-12">
-					<div className="case_study_nav">
-						<div className="case_study_menu">
-							<ul className="menu-filtering">
-								<li className={active === 'all' ? 'active' : ''} onClick={() => setActive('all')}>SEE All</li>
-                                {categoryMenu.map((item, index) => (
-								<li onClick={() => setActive(item.category)} className={active === item.category ? 'active' : ''} key={index}>   
-                                {item.title}
-                              </li>
-                            ))}
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div className="row image_load">
-            {data.map((item, index)=>(
-				<div
-                className={`col-lg-6 col-sm-6 project-grid-area grid-item ${ active === 'all' ? '' : !(active === item.category) ? 'd-none' : '' }`}
-                key={index}                
-                >
-					<div className="case-study-single-box">
-						<div className="case-study-thumb">
-              <Image src={item.img} alt="img" width={606} height={447}   />
-						</div>
-						<div className="case-study-content1">
-							<div className="case-study-title">
-								<h5>{item.title}</h5>
-								<h3><Link href="/project">{item.category}</Link></h3>
-							</div>
-							<div className="case-study-icon">
-                            <Link href="/project"><i className="bi bi-arrow-right"></i></Link>
-							</div>
-						</div>
-					</div>
-				</div>
-                ))}
-			</div>
-		</div>
-	</div>
-    );
+    // Distinct industry values for filter buttons
+    const industries = [...new Set(data.map(d => d.category))].sort();
+
+    return <Projecr3Client data={data} industries={industries} />;
 };
 
 export default Projecr3;

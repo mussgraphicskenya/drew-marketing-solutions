@@ -73,8 +73,14 @@ const CaseStudyPage = async ({ params }) => {
                 <div className="container">
                     <div className="row">
                         <div className="project-details">
-                            <div className="project-details-thumb">
-                                <Image src={getCloudinaryUrl(item.coverImage, 1296, 673) || '/assets/images/inner/project-det-thu.png'} alt={item.title} width={1296} height={673} />
+                            <div className="project-details-thumb" style={{ position: 'relative', width: '100%', paddingTop: '51.9%', overflow: 'hidden' }}>
+                                <Image
+                                    src={item.coverImage || '/assets/images/inner/project-det-thu.png'}
+                                    alt={item.title}
+                                    fill
+                                    style={{ objectFit: 'cover', objectPosition: 'center' }}
+                                    sizes="100vw"
+                                />
                             </div>
                         </div>
                     </div>
@@ -106,9 +112,17 @@ const CaseStudyPage = async ({ params }) => {
                                     </div>
                                     <div className="row align-items-center">
                                         <div className="col-lg-6">
-                                            <div className="project-details-item-images">
-                                                <Image src="/assets/images/inner/project-det-img.png" alt="img" width={416} height={284} />
-                                            </div>
+                                            {item.secondaryImage ? (
+                                                <div className="project-details-item-images" style={{ position: 'relative', width: '100%', paddingTop: '68.3%', overflow: 'hidden', borderRadius: '8px' }}>
+                                                    <Image
+                                                        src={getCloudinaryUrl(item.secondaryImage, 416, 284) || item.secondaryImage}
+                                                        alt={`${item.title} – secondary`}
+                                                        fill
+                                                        style={{ objectFit: 'cover' }}
+                                                        sizes="(max-width: 768px) 100vw, 416px"
+                                                    />
+                                                </div>
+                                            ) : null}
                                         </div>
                                         <div className="col-lg-6">
                                             <div className="project-details-list-item">

@@ -10,7 +10,7 @@ export default function NewCaseStudyPage() {
     const [form, setForm] = useState({
         title: '', slug: '', client: '', industry: '', problem: '',
         insight: '', strategy: '', execution: '', results: '',
-        coverImage: '', featured: false,
+        coverImage: '', secondaryImage: '', featured: false,
     });
     const [loading, setLoading] = useState(false);
     const [error, setError]   = useState('');
@@ -200,6 +200,15 @@ export default function NewCaseStudyPage() {
                             <ImageUpload
                                 value={form.coverImage}
                                 onChange={(url) => setForm(p => ({ ...p, coverImage: url }))}
+                                type="case-study"
+                            />
+                        </div>
+
+                        <div>
+                            <label style={labelStyle}>Secondary Image <span style={{ color: '#5a6070', fontWeight: 400, textTransform: 'none' }}>(optional — shown in the detail page mid-section)</span></label>
+                            <ImageUpload
+                                value={form.secondaryImage}
+                                onChange={(url) => setForm(p => ({ ...p, secondaryImage: url }))}
                                 type="case-study"
                             />
                         </div>

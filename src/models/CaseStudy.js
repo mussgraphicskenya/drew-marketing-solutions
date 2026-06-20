@@ -11,6 +11,7 @@ const CaseStudySchema = new mongoose.Schema({
     execution: { type: String, required: true },
     results: { type: String, required: true },
     coverImage: { type: String },
+    secondaryImage: { type: String },
     featured: { type: Boolean, default: false }
 }, { timestamps: true });
 

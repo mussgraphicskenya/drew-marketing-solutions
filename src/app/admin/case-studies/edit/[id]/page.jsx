@@ -45,8 +45,9 @@ export default function EditCaseStudyPage({ params }) {
                     strategy:   data.strategy   ?? '',
                     execution:  data.execution  ?? '',
                     results:    data.results    ?? '',
-                    coverImage: data.coverImage ?? '',
-                    featured:   data.featured   ?? false,
+                    coverImage:     data.coverImage     ?? '',
+                    secondaryImage: data.secondaryImage ?? '',
+                    featured:       data.featured       ?? false,
                 });
             })
             .catch(err => setError(err.message))
@@ -225,6 +226,15 @@ export default function EditCaseStudyPage({ params }) {
                                 <ImageUpload
                                     value={form.coverImage}
                                     onChange={(url) => setForm(p => ({ ...p, coverImage: url }))}
+                                    type="case-study"
+                                />
+                            </div>
+
+                            <div>
+                                <label style={labelStyle}>Secondary Image <span style={{ color: '#5a6070', fontWeight: 400, textTransform: 'none' }}>(optional — shown in the detail page mid-section)</span></label>
+                                <ImageUpload
+                                    value={form.secondaryImage}
+                                    onChange={(url) => setForm(p => ({ ...p, secondaryImage: url }))}
                                     type="case-study"
                                 />
                             </div>
