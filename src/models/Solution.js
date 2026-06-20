@@ -8,7 +8,8 @@ const SolutionSchema = new mongoose.Schema({
     includes: [{ type: String }],
     icon:     { type: String },
     image:    { type: String },
-    order:    { type: Number, default: 0 }
+    order:    { type: Number, default: 0 },
+    featured: { type: Boolean, default: false },
 }, { timestamps: true });
 
 export default mongoose.models.Solution || mongoose.model('Solution', SolutionSchema);

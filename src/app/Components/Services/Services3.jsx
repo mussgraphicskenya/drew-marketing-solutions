@@ -19,11 +19,13 @@ const icons = [
 const Services3 = async () => {
     noStore();
     await connectDB();
-    const data = await mongoose.connection
-        .collection('solutions')
-        .find({})
-        .sort({ order: 1 })
-        .toArray();
+    const db = mongoose.connection.collection('solutions');
+
+    // Prefer featured items; fall back to first 3 by order if none are marked
+    let data = await db.find({ featured: true }).sort({ order: 1 }).limit(3).toArray();
+    if (data.length === 0) {
+        data = await db.find({}).sort({ order: 1 }).limit(3).toArray();
+    }
 
     return (
         <div className="our-service-section" data-background="/assets/images/home-3/service-bg.png">
@@ -67,6 +69,15 @@ const Services3 = async () => {
                 .our-service-section p.service-desc {
                     flex: 1;
                 }
+                /* View All button row */
+                .our-service-section .view-all-wrap {
+                    margin-top: 48px;
+                    text-align: center;
+                }
+                .our-service-section .view-all-wrap .solutek-btn a {
+                    padding: 14px 36px;
+                    font-size: 14px;
+                }
             `}</style>
 
             <div className="container">
@@ -81,7 +92,7 @@ const Services3 = async () => {
                     </div>
                 </div>
 
-                {/* row-services applies the flex equal-height fix */}
+                {/* 3 featured cards — max 3 so no row-wrap overlap */}
                 <div className="row row-services">
                     {data.map((item, i) => (
                         <div key={String(item._id)} className="col-lg-4 col-md-6 col-service mb-4">
@@ -113,7 +124,6 @@ const Services3 = async () => {
 
                                 {/* Thumbnail image */}
                                 <div className="service-thumb">
-                                    {/* plain img avoids next/image layout issues for absolutely-positioned elements */}
                                     <img
                                         src={item.image || thumbs[i % 3]}
                                         alt={item.title || 'service'}
@@ -125,6 +135,17 @@ const Services3 = async () => {
                             </div>
                         </div>
                     ))}
+                </div>
+
+                {/* View All Solutions button */}
+                <div className="row view-all-wrap">
+                    <div className="col-lg-12">
+                        <div className="solutek-btn">
+                            <Link href="/service">
+                                View All Solutions <i className="bi bi-arrow-right"></i>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

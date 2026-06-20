@@ -29,6 +29,7 @@ export default async function SolutionsPage({ searchParams }) {
         headline: d.headline ?? '—',
         order:    d.order    ?? 0,
         icon:     d.icon     ?? '',
+        featured: d.featured ?? false,
         includes: Array.isArray(d.includes) ? d.includes : [],
     }));
 
@@ -80,6 +81,11 @@ export default async function SolutionsPage({ searchParams }) {
                                                 <span style={{ color: '#e0e4f0', fontWeight: 600, fontSize: '15px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={item.title}>
                                                     {item.title}
                                                 </span>
+                                                {item.featured && (
+                                                    <span title="Shown on homepage" style={{ background: 'rgba(0,196,140,0.15)', color: '#00c48c', fontSize: '11px', fontWeight: 700, padding: '2px 8px', borderRadius: '20px', flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                                        <i className="bi bi-star-fill"></i> Featured
+                                                    </span>
+                                                )}
                                             </div>
                                             <p style={{ color: '#9aa0b4', fontSize: '13px', margin: '0 0 8px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={item.headline}>
                                                 {item.headline}

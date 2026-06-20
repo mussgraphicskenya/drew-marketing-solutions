@@ -8,7 +8,7 @@ import ImageUpload from '@/app/Components/Admin/ImageUpload';
 export default function NewSolutionPage() {
     const router = useRouter();
     const [form, setForm] = useState({
-        title: '', slug: '', headline: '', body: '', includes: '', icon: '', image: '', order: 1,
+        title: '', slug: '', headline: '', body: '', includes: '', icon: '', image: '', order: 1, featured: false,
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -30,7 +30,8 @@ export default function NewSolutionPage() {
             const payload = {
                 ...form,
                 includes: form.includes.split(',').map((s) => s.trim()).filter(Boolean),
-                order: Number(form.order),
+                order:    Number(form.order),
+                featured: Boolean(form.featured),
             };
             const res = await fetch('/api/admin/solutions', {
                 method: 'POST',
@@ -136,6 +137,22 @@ export default function NewSolutionPage() {
                                 onChange={(url) => setForm((p) => ({ ...p, icon: url }))}
                                 type="solution-icon"
                             />
+                        </div>
+
+                        {/* Featured toggle */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '14px 16px', background: 'rgba(0,196,140,0.05)', border: '1px solid rgba(0,196,140,0.18)', borderRadius: '8px' }}>
+                            <input
+                                type="checkbox"
+                                id="featured-new"
+                                checked={form.featured || false}
+                                onChange={(e) => setForm((p) => ({ ...p, featured: e.target.checked }))}
+                                style={{ width: '18px', height: '18px', accentColor: '#00c48c', cursor: 'pointer' }}
+                            />
+                            <label htmlFor="featured-new" style={{ color: '#e0e4f0', fontSize: '14px', fontWeight: 600, cursor: 'pointer', margin: 0 }}>
+                                <i className="bi bi-star-fill me-2" style={{ color: '#00c48c' }}></i>
+                                Show on Homepage
+                                <span style={{ color: '#5a6070', fontWeight: 400, fontSize: '12px', marginLeft: '8px' }}>max 3 recommended</span>
+                            </label>
                         </div>
                     </div>
 
