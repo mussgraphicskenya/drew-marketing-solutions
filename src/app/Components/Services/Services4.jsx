@@ -42,32 +42,32 @@ const Services4 = async () => {
     return (
         <>
             <style>{`
-                /* ── Equal-height cards ── */
+                /* ── Equal-height cards — stretch all cols so cards match tallest ── */
                 .sservice-area.style-two .row {
                     display: flex;
                     flex-wrap: wrap;
+                    align-items: stretch;
                 }
-                .sservice-area.style-two .col-xl-3,
-                .sservice-area.style-two .col-lg-4,
-                .sservice-area.style-two .col-md-6 {
+                .sservice-area.style-two [class*="col-"] {
                     display: flex;
-                    flex-direction: column;
                 }
                 .sservice-area.style-two .single-service-box {
                     display: flex;
                     flex-direction: column;
-                    flex: 1;
+                    width: 100%;
+                    height: 100%;
                 }
                 .sservice-area.style-two .service-content {
                     display: flex;
                     flex-direction: column;
                     flex: 1;
-                    padding: 37px 10px 0 28px;
+                    padding: 37px 10px 16px 28px;
                 }
 
-                /* ── Thumb: fill the card width correctly ── */
+                /* ── Thumb: fill card width correctly ── */
                 .sservice-area.style-two .service-thumb {
                     overflow: hidden;
+                    flex-shrink: 0;
                 }
                 .sservice-area.style-two .service-thumb img {
                     width: 100%;
@@ -75,7 +75,7 @@ const Services4 = async () => {
                     display: block;
                 }
 
-                /* ── Icon: flex-centre instead of line-height trick ── */
+                /* ── Icon: flex-centre instead of broken line-height trick ── */
                 .sservice-area.style-two .service-icon {
                     display: flex;
                     align-items: center;
@@ -83,7 +83,7 @@ const Services4 = async () => {
                     line-height: 1;
                 }
 
-                /* ── Title: min-height prevents layout shift with long names ── */
+                /* ── Title: min-height aligns titles across cards ── */
                 .sservice-area.style-two h3.service-title {
                     font-size: 20px !important;
                     line-height: 1.35 !important;
@@ -93,9 +93,15 @@ const Services4 = async () => {
                     margin-bottom: 4px !important;
                 }
 
-                /* ── Description grows to fill remaining card space ── */
+                /* ── Description fills available space between title and button ── */
                 .sservice-area.style-two p.service-text {
                     flex: 1;
+                    margin-bottom: 15px;
+                }
+
+                /* ── READ MORE button always at card bottom ── */
+                .sservice-area.style-two .service-btn {
+                    margin-top: auto;
                 }
             `}</style>
 

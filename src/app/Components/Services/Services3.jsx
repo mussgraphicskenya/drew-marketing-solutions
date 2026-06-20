@@ -71,12 +71,18 @@ const Services3 = async () => {
                 }
                 /* View All button row */
                 .our-service-section .view-all-wrap {
-                    margin-top: 48px;
+                    margin-top: 60px;
                     text-align: center;
+                    padding-bottom: 20px;
                 }
-                .our-service-section .view-all-wrap .solutek-btn a {
-                    padding: 14px 36px;
-                    font-size: 14px;
+                @media (min-width: 992px) {
+                    .our-service-section .view-all-wrap {
+                        margin-top: 80px;
+                    }
+                    /* Extra bottom padding so button + hanging thumb don't clip next section */
+                    .our-service-section {
+                        padding-bottom: 220px !important;
+                    }
                 }
             `}</style>
 
@@ -137,12 +143,16 @@ const Services3 = async () => {
                     ))}
                 </div>
 
-                {/* View All Solutions button */}
+                {/* View All Solutions button — matches About3 "Explore More" hover pattern exactly */}
                 <div className="row view-all-wrap">
                     <div className="col-lg-12">
                         <div className="solutek-btn">
                             <Link href="/service">
-                                View All Solutions <i className="bi bi-arrow-right"></i>
+                                VIEW ALL SOLUTIONS <i className="bi bi-arrow-right"></i>
+                                <div className="solutek-hover-btn hover-bx"></div>
+                                <div className="solutek-hover-btn hover-bx2"></div>
+                                <div className="solutek-hover-btn hover-bx3"></div>
+                                <div className="solutek-hover-btn hover-bx4"></div>
                             </Link>
                         </div>
                     </div>
