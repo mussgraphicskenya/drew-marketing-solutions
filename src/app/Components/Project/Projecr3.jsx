@@ -59,10 +59,10 @@ const Projecr3 = () => {
 						<div className="case-study-content1">
 							<div className="case-study-title">
 								<h5>{item.title}</h5>
-								<h3><Link href="/project/project-details">{item.category}</Link></h3>
+								<h3><Link href="/project">{item.category}</Link></h3>
 							</div>
 							<div className="case-study-icon">
-                            <Link href="/project/project-details"><i className="bi bi-arrow-right"></i></Link>
+                            <Link href="/project"><i className="bi bi-arrow-right"></i></Link>
 							</div>
 						</div>
 					</div>

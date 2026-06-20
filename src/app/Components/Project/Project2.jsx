@@ -105,7 +105,7 @@ const Project2 = () => {
                                   <Image src={item.img} alt="img" width={395} height={447}   />
                                 </div>
                                 <div className="project-content">
-                                    <h4 className="project-title"><Link href="/project/project-details">{item.title}</Link></h4>
+                                    <h4 className="project-title"><Link href="/project">{item.title}</Link></h4>
                                     <p className="project-des">{item.desc}</p>
                                 </div>
                                 <div className="project-icon">
