@@ -5,6 +5,7 @@ import Link from 'next/link';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
 import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
+import ServiceFaqAccordion from './ServiceFaqAccordion';
 
 export async function generateMetadata({ params }) {
     await connectDB();
@@ -57,32 +58,37 @@ const SolutionDetailPage = async ({ params }) => {
         );
     }
 
-    const includes = Array.isArray(item.includes) ? item.includes : [];
+    const includes        = Array.isArray(item.includes) ? item.includes : [];
+    const whyDrewTitle   = item.whyDrewTitle   || 'Why Drew?';
+    const whyDrewContent = item.whyDrewContent ||
+        'We combine sharp strategic thinking with deep local market knowledge to deliver measurable business outcomes — not just deliverables.';
 
     return (
         <div className="project-detail">
             <BreadCumb Title={item.title}></BreadCumb>
 
-            {/*
-             * Use services-details-area (template class) so the sidebar
-             * padding/spacing CSS matches the original design exactly.
-             */}
             <div className="services-details-area">
                 <div className="container">
 
-                    {/* ── Single row: col-lg-8 (content) + col-lg-4 (sidebar) ──
-                     *  Both columns START at the same vertical position.
-                     *  Hero image is the FIRST element inside col-lg-8.
-                     */}
+                    {/* ── Single row — BOTH columns start flush at the top ── */}
                     <div className="row">
 
-                        {/* ── LEFT: hero image + detail content ── */}
+                        {/* ══ LEFT col: hero image first, then content ══ */}
                         <div className="col-lg-8">
                             <div className="row">
                                 <div className="col-lg-12">
 
-                                    {/* Hero image — 856×504 matches template proportions */}
-                                    <div className="services-details-thumb" style={{ position: 'relative', width: '100%', paddingTop: '58.9%', overflow: 'hidden', borderRadius: '20px' }}>
+                                    {/* ── Hero image ── */}
+                                    <div
+                                        className="services-details-thumb"
+                                        style={{
+                                            position: 'relative',
+                                            width: '100%',
+                                            paddingTop: '58.9%',   /* 504/856 × 100 = template aspect ratio */
+                                            overflow: 'hidden',
+                                            borderRadius: '20px',
+                                        }}
+                                    >
                                         <Image
                                             src={item.image
                                                 ? (getCloudinaryUrl(item.image, 856, 504) || item.image)
@@ -94,19 +100,18 @@ const SolutionDetailPage = async ({ params }) => {
                                         />
                                     </div>
 
-                                    {/* Main text content */}
+                                    {/* ── Main text ── */}
                                     <div className="services-details-content">
                                         <h4 className="services-details-title">{item.title}</h4>
-
                                         <p className="services-details-desc">{item.headline}</p>
-
                                         {item.body && (
                                             <p className="services-details-desc">{item.body}</p>
                                         )}
                                     </div>
 
-                                    {/* What's Included + secondary box */}
+                                    {/* ── What's Included + Why Drew? — two columns ── */}
                                     <div className="row">
+                                        {/* Left box: What's Included (dynamic from DB) */}
                                         {includes.length > 0 && (
                                             <div className="col-lg-6 col-md-6">
                                                 <div className="service-detalis-text-box">
@@ -126,21 +131,32 @@ const SolutionDetailPage = async ({ params }) => {
                                                 </div>
                                             </div>
                                         )}
+
+                                        {/* Right box: Why Drew? — fully dynamic from DB */}
                                         <div className={includes.length > 0 ? 'col-lg-6 col-md-6' : 'col-lg-12'}>
                                             <div className="service-details-icon-box">
+                                                {/* Optional icon — only renders if set in admin */}
+                                                {item.secondBoxIcon && (
+                                                    <div className="service-det-icon">
+                                                        <img
+                                                            src={item.secondBoxIcon}
+                                                            alt=""
+                                                            style={{ width: '56px', height: '60px', objectFit: 'contain' }}
+                                                        />
+                                                    </div>
+                                                )}
                                                 <div className="service-det-content">
-                                                    <h3>Why Drew?</h3>
-                                                    <p>
-                                                        We combine sharp strategic thinking with deep local market
-                                                        knowledge to deliver measurable business outcomes — not just
-                                                        deliverables.
-                                                    </p>
+                                                    <h3>{whyDrewTitle}</h3>
+                                                    <p>{whyDrewContent}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* CTA */}
+                                    {/* ── Inline FAQ accordion (client component, static content) ── */}
+                                    <ServiceFaqAccordion />
+
+                                    {/* ── CTA ── */}
                                     <div style={{ marginTop: '40px', marginBottom: '10px' }}>
                                         <div className="solutek-btn">
                                             <Link href="/contact">
@@ -157,7 +173,7 @@ const SolutionDetailPage = async ({ params }) => {
                             </div>
                         </div>{/* /col-lg-8 */}
 
-                        {/* ── RIGHT: sidebar — starts FLUSH with top of hero image ── */}
+                        {/* ══ RIGHT col: sidebar — starts flush with hero image top ══ */}
                         <div className="col-lg-4">
                             <div className="row">
                                 <div className="col-lg-12">
@@ -189,14 +205,28 @@ const SolutionDetailPage = async ({ params }) => {
                                         </div>
                                     )}
 
-                                    {/* Downloads widget */}
+                                    {/* ── Downloads widget ──
+                                     *  Issue found: there is no /api/upload-pdf route in this project
+                                     *  and no seed-solution-details.cjs script exists.
+                                     *  The "Downloads" widget is rendered as static template links
+                                     *  until a PDF upload system is implemented.
+                                     *  Links use href="#" so they don't 404.
+                                     */}
                                     <div className="widget-sidber">
                                         <div className="widget-sidber-content">
                                             <h4>Downloads</h4>
                                         </div>
                                         <div className="widget-sidber-download-button">
-                                            <a href="#"><i className="bi bi-file-earmark-pdf"></i>Service Overview<span><i className="bi bi-download"></i></span></a>
-                                            <a className="active" href="#"><i className="bi bi-file-earmark-pdf"></i>Capabilities Deck<span><i className="bi bi-download"></i></span></a>
+                                            <a href="/contact">
+                                                <i className="bi bi-file-earmark-pdf"></i>
+                                                Service Overview
+                                                <span><i className="bi bi-arrow-right"></i></span>
+                                            </a>
+                                            <a className="active" href="/contact">
+                                                <i className="bi bi-file-earmark-pdf"></i>
+                                                Capabilities Deck
+                                                <span><i className="bi bi-arrow-right"></i></span>
+                                            </a>
                                         </div>
                                     </div>
 

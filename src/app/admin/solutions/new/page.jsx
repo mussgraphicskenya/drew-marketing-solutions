@@ -8,7 +8,9 @@ import ImageUpload from '@/app/Components/Admin/ImageUpload';
 export default function NewSolutionPage() {
     const router = useRouter();
     const [form, setForm] = useState({
-        title: '', slug: '', headline: '', body: '', includes: '', icon: '', image: '', order: 1, featured: false,
+        title: '', slug: '', headline: '', body: '', includes: '',
+        whyDrewTitle: '', whyDrewContent: '', secondBoxIcon: '',
+        icon: '', image: '', order: 1, featured: false,
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -119,6 +121,36 @@ export default function NewSolutionPage() {
                             <label style={labelStyle}>Includes <span style={{ color: '#5a6070', fontWeight: 400 }}>(comma-separated)</span></label>
                             <input name="includes" value={form.includes} onChange={handleChange} style={inputStyle} placeholder="Market Research, Competitor Analysis, Audience Profiling" />
                             <p style={{ color: '#5a6070', fontSize: '12px', marginTop: '6px' }}>e.g. Market Research, Competitor Analysis, Audience Profiling</p>
+                        </div>
+
+                        {/* ── Why Drew? section ── */}
+                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '20px' }}>
+                            <p style={{ color: '#9aa0b4', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '14px' }}>"Why Drew?" Box (optional)</p>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                                <div>
+                                    <label style={labelStyle}>Box Title</label>
+                                    <input name="whyDrewTitle" value={form.whyDrewTitle} onChange={handleChange} style={inputStyle} placeholder="Why Drew?" />
+                                </div>
+                                <div>
+                                    <label style={labelStyle}>Box Content</label>
+                                    <textarea name="whyDrewContent" rows={3} value={form.whyDrewContent} onChange={handleChange} style={textareaStyle} placeholder="We combine sharp strategic thinking with deep local market knowledge..." />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* ── Second box icon ── */}
+                        <div>
+                            <label style={labelStyle}>Second Box Icon <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional — shown beside the &quot;Why Drew?&quot; text)</span></label>
+                            <ImageUpload
+                                value={form.secondBoxIcon}
+                                onChange={(url) => setForm((p) => ({ ...p, secondBoxIcon: url }))}
+                                type="solution-icon"
+                            />
+                            {form.secondBoxIcon && (
+                                <button type="button" onClick={() => setForm(p => ({ ...p, secondBoxIcon: '' }))} style={{ marginTop: '8px', background: 'none', border: '1px solid rgba(255,60,0,0.4)', color: '#ff7c5c', padding: '4px 12px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}>
+                                    ✕ Remove Icon
+                                </button>
+                            )}
                         </div>
 
                         <div>

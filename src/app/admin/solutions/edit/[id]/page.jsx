@@ -19,15 +19,18 @@ export default function EditSolutionPage({ params }) {
             .then((data) => {
                 if (data.error) throw new Error(data.error);
                 setForm({
-                    title:    data.title    ?? '',
-                    slug:     data.slug     ?? '',
-                    headline: data.headline ?? '',
-                    body:     data.body     ?? '',
-                    includes: Array.isArray(data.includes) ? data.includes.join(', ') : '',
-                    icon:     data.icon     ?? '',
-                    image:    data.image    ?? '',
-                    order:    data.order    ?? 1,
-                    featured: data.featured ?? false,
+                    title:          data.title          ?? '',
+                    slug:           data.slug           ?? '',
+                    headline:       data.headline       ?? '',
+                    body:           data.body           ?? '',
+                    includes:       Array.isArray(data.includes) ? data.includes.join(', ') : '',
+                    whyDrewTitle:   data.whyDrewTitle   ?? '',
+                    whyDrewContent: data.whyDrewContent ?? '',
+                    secondBoxIcon:  data.secondBoxIcon  ?? '',
+                    icon:           data.icon           ?? '',
+                    image:          data.image          ?? '',
+                    order:          data.order          ?? 1,
+                    featured:       data.featured       ?? false,
                 });
             })
             .catch((err) => setError(err.message))
@@ -121,6 +124,36 @@ export default function EditSolutionPage({ params }) {
                             <div>
                                 <label style={labelStyle}>Includes <span style={{ color: '#5a6070', fontWeight: 400 }}>(comma-separated)</span></label>
                                 <input name="includes" value={form.includes} onChange={handleChange} style={inputStyle} />
+                            </div>
+
+                            {/* ── Why Drew? section ── */}
+                            <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '20px' }}>
+                                <p style={{ color: '#9aa0b4', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '14px' }}>"Why Drew?" Box (optional)</p>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                                    <div>
+                                        <label style={labelStyle}>Box Title</label>
+                                        <input name="whyDrewTitle" value={form.whyDrewTitle} onChange={handleChange} style={inputStyle} placeholder="Why Drew?" />
+                                    </div>
+                                    <div>
+                                        <label style={labelStyle}>Box Content</label>
+                                        <textarea name="whyDrewContent" rows={3} value={form.whyDrewContent} onChange={handleChange} style={textareaStyle} placeholder="We combine sharp strategic thinking..." />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* ── Second box icon ── */}
+                            <div>
+                                <label style={labelStyle}>Second Box Icon <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional — shown beside the &quot;Why Drew?&quot; text)</span></label>
+                                <ImageUpload
+                                    value={form.secondBoxIcon}
+                                    onChange={(url) => setForm((p) => ({ ...p, secondBoxIcon: url }))}
+                                    type="solution-icon"
+                                />
+                                {form.secondBoxIcon && (
+                                    <button type="button" onClick={() => setForm(p => ({ ...p, secondBoxIcon: '' }))} style={{ marginTop: '8px', background: 'none', border: '1px solid rgba(255,60,0,0.4)', color: '#ff7c5c', padding: '4px 12px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}>
+                                        ✕ Remove Icon
+                                    </button>
+                                )}
                             </div>
 
                             <div>
