@@ -74,7 +74,7 @@ const CaseStudyPage = async ({ params }) => {
                     <div className="row">
                         <div className="project-details">
                             <div className="project-details-thumb">
-                                <Image src={getCloudinaryUrl(item.coverImage, 1200, 700) || '/assets/images/inner/service-details.png'} alt={item.title} width={1296} height={673} style={{ width: '100%', height: 'auto' }} />
+                                <Image src={getCloudinaryUrl(item.coverImage, 1296, 673) || '/assets/images/inner/project-det-thu.png'} alt={item.title} width={1296} height={673} />
                             </div>
                         </div>
                     </div>

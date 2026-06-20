@@ -87,7 +87,7 @@ const BlogDetailPage = async ({ params }) => {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="blog-details-thumb">
-                                        <Image src={getCloudinaryUrl(item.coverImage, 1200, 700) || '/assets/images/blog1.png'} alt={item.title} width={856} height={501} style={{ width: '100%', height: 'auto' }} />
+                                        <Image src={getCloudinaryUrl(item.coverImage, 856, 501) || '/assets/images/blog1.png'} alt={item.title} width={856} height={501} />
                                     </div>
                                     <div className="blog-details-content">
                                         <div className="meta-blog">

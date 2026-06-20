@@ -72,11 +72,10 @@ const SolutionDetailPage = async ({ params }) => {
                             <div className="project-details">
                                 <div className="project-details-thumb">
                                     <Image
-                                        src={getCloudinaryUrl(item.image, 1200, 700) || '/assets/images/inner/service-details.png'}
+                                        src={getCloudinaryUrl(item.image, 1296, 673) || '/assets/images/inner/project-det-thu.png'}
                                         alt={item.title}
                                         width={1296}
-                                        height={500}
-                                        style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+                                        height={673}
                                     />
                                 </div>
                             </div>
