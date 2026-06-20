@@ -103,6 +103,18 @@ const Services4 = async () => {
                 .sservice-area.style-two .service-btn {
                     margin-top: auto;
                 }
+
+                /* ── Desktop: title needs clearance from abs-positioned icon (top:39%) ── */
+                @media (min-width: 992px) {
+                    .sservice-area.style-two .service-content {
+                        padding-top: 50px;
+                    }
+                    .sservice-area.style-two h3.service-title {
+                        margin-top: 45px !important;
+                        position: relative;
+                        z-index: 1;
+                    }
+                }
             `}</style>
 
             <div className="sservice-area style-two">

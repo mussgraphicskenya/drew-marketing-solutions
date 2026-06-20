@@ -79,9 +79,9 @@ const Services3 = async () => {
                     .our-service-section .view-all-wrap {
                         margin-top: 80px;
                     }
-                    /* Extra bottom padding so button + hanging thumb don't clip next section */
+                    /* Enough room for button + hanging thumb without large gap */
                     .our-service-section {
-                        padding-bottom: 220px !important;
+                        padding-bottom: 100px !important;
                     }
                 }
             `}</style>
