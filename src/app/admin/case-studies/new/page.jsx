@@ -1,11 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ImageUpload from '@/app/Components/Admin/ImageUpload';
-
-const CATEGORIES = ['Marketing Strategy', 'Brand Positioning', 'Business Growth', 'Digital Marketing', 'Thought Leadership'];
 
 export default function NewCaseStudyPage() {
     const router = useRouter();
@@ -15,15 +13,71 @@ export default function NewCaseStudyPage() {
         coverImage: '', featured: false,
     });
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError]   = useState('');
+
+    // Category selector state
+    const [categories, setCategories]       = useState([]);
+    const [catsLoading, setCatsLoading]     = useState(true);
+    const [showNewCat, setShowNewCat]       = useState(false);
+    const [newCatName, setNewCatName]       = useState('');
+    const [addingCat, setAddingCat]         = useState(false);
+    const [catError, setCatError]           = useState('');
+
+    // Load categories on mount
+    useEffect(() => {
+        fetch('/api/categories?type=case-study')
+            .then(r => r.json())
+            .then(data => {
+                if (Array.isArray(data)) setCategories(data.map(c => c.name));
+            })
+            .catch(() => {})
+            .finally(() => setCatsLoading(false));
+    }, []);
 
     function handleChange(e) {
         const { name, value, type, checked } = e.target;
-        setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+        setForm(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
     }
 
     function autoSlug(title) {
         return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+
+    function handleIndustryChange(e) {
+        const val = e.target.value;
+        if (val === '__add_new__') {
+            setShowNewCat(true);
+        } else {
+            setShowNewCat(false);
+            setForm(prev => ({ ...prev, industry: val }));
+        }
+    }
+
+    async function handleAddCategory() {
+        if (!newCatName.trim()) return;
+        setAddingCat(true);
+        setCatError('');
+        try {
+            const res = await fetch('/api/categories', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: newCatName.trim(), type: 'case-study' }),
+            });
+            const data = await res.json();
+            if (!res.ok && res.status !== 200) throw new Error(data.error || 'Failed to add category');
+            const name = data.name;
+            setCategories(prev => {
+                const updated = prev.includes(name) ? prev : [...prev, name].sort();
+                return updated;
+            });
+            setForm(prev => ({ ...prev, industry: name }));
+            setNewCatName('');
+            setShowNewCat(false);
+        } catch (err) {
+            setCatError(err.message);
+        } finally {
+            setAddingCat(false);
+        }
     }
 
     async function handleSubmit(e) {
@@ -74,7 +128,7 @@ export default function NewCaseStudyPage() {
                         <div className="row g-3">
                             <div className="col-lg-8">
                                 <label style={labelStyle}>Title *</label>
-                                <input name="title" required value={form.title} onChange={(e) => { handleChange(e); setForm((p) => ({ ...p, slug: autoSlug(e.target.value) })); }} style={inputStyle} placeholder="Brand Repositioning for a Retail Brand" />
+                                <input name="title" required value={form.title} onChange={(e) => { handleChange(e); setForm(p => ({ ...p, slug: autoSlug(e.target.value) })); }} style={inputStyle} placeholder="Brand Repositioning for a Retail Brand" />
                             </div>
                             <div className="col-lg-4">
                                 <label style={labelStyle}>Slug *</label>
@@ -88,8 +142,43 @@ export default function NewCaseStudyPage() {
                                 <input name="client" value={form.client} onChange={handleChange} style={inputStyle} placeholder="Confidential" />
                             </div>
                             <div className="col-lg-6">
-                                <label style={labelStyle}>Industry *</label>
-                                <input name="industry" required value={form.industry} onChange={handleChange} style={inputStyle} placeholder="Retail, Technology, Financial Services…" />
+                                <label style={labelStyle}>Industry / Category *</label>
+
+                                {/* Category dropdown */}
+                                <select
+                                    name="industry"
+                                    required
+                                    value={showNewCat ? '__add_new__' : form.industry}
+                                    onChange={handleIndustryChange}
+                                    style={{ ...inputStyle, cursor: 'pointer' }}
+                                >
+                                    <option value="" disabled>{catsLoading ? 'Loading…' : 'Select a category'}</option>
+                                    {categories.map(cat => (
+                                        <option key={cat} value={cat}>{cat}</option>
+                                    ))}
+                                    <option value="__add_new__">＋ Add New Category…</option>
+                                </select>
+
+                                {/* Inline new-category form */}
+                                {showNewCat && (
+                                    <div style={{ marginTop: '10px', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                        <input
+                                            value={newCatName}
+                                            onChange={e => { setNewCatName(e.target.value); setCatError(''); }}
+                                            onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), handleAddCategory())}
+                                            placeholder="New category name"
+                                            style={{ ...inputStyle, flex: 1, marginBottom: 0 }}
+                                            autoFocus
+                                        />
+                                        <button type="button" onClick={handleAddCategory} disabled={addingCat || !newCatName.trim()} style={submitBtn('#ff3c00')}>
+                                            {addingCat ? '…' : 'Add'}
+                                        </button>
+                                        <button type="button" onClick={() => { setShowNewCat(false); setNewCatName(''); setCatError(''); }} style={{ ...submitBtn('#3a4055'), background: 'transparent', border: '1px solid rgba(255,255,255,0.15)' }}>
+                                            ✕
+                                        </button>
+                                    </div>
+                                )}
+                                {catError && <p style={{ color: '#ff7c5c', fontSize: '12px', marginTop: '6px' }}>{catError}</p>}
                             </div>
                         </div>
 
@@ -110,7 +199,7 @@ export default function NewCaseStudyPage() {
                             <label style={labelStyle}>Cover Image</label>
                             <ImageUpload
                                 value={form.coverImage}
-                                onChange={(url) => setForm((p) => ({ ...p, coverImage: url }))}
+                                onChange={(url) => setForm(p => ({ ...p, coverImage: url }))}
                                 type="case-study"
                             />
                         </div>
@@ -134,9 +223,9 @@ export default function NewCaseStudyPage() {
 }
 
 const labelStyle = { color: '#9aa0b4', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', display: 'block', marginBottom: '8px' };
-const inputStyle = { width: '100%', padding: '10px 14px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#e0e4f0', fontSize: '14px', outline: 'none' };
+const inputStyle  = { width: '100%', padding: '10px 14px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#e0e4f0', fontSize: '14px', outline: 'none' };
 const textareaStyle = { ...inputStyle, resize: 'vertical', lineHeight: 1.6 };
-const cancelBtn = { padding: '10px 20px', background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', color: '#9aa0b4', fontSize: '14px', fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center' };
+const cancelBtn   = { padding: '10px 20px', background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', color: '#9aa0b4', fontSize: '14px', fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center' };
 function submitBtn(color) {
-    return { padding: '10px 24px', background: color, border: 'none', borderRadius: '8px', color: '#fff', fontSize: '14px', fontWeight: 700, cursor: 'pointer', display: 'inline-flex', alignItems: 'center' };
+    return { padding: '10px 24px', background: color, border: 'none', borderRadius: '8px', color: '#fff', fontSize: '14px', fontWeight: 700, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' };
 }
