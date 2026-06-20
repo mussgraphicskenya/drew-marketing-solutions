@@ -4,6 +4,7 @@ import SectionTitle from "../Common/SectionTitle";
 import Image from 'next/image';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
+import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
 
 const Blog2 = async () => {
     noStore();
@@ -34,7 +35,7 @@ const Blog2 = async () => {
                         <div className="single-blog-box">
                             <div className="single-blog-thumb">
                                  <Image
-                                    src={item.coverImage || '/assets/images/blog1.png'}
+                                    src={getCloudinaryUrl(item.coverImage, 416, 283) || '/assets/images/blog1.png'}
                                     alt={item.title || 'Insight'}
                                     width={416}
                                     height={283}

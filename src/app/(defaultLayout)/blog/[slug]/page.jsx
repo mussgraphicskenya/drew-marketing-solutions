@@ -4,6 +4,7 @@ import Link from "next/link";
 import connectDB from "@/lib/mongodb";
 import mongoose from "mongoose";
 import CommentForm from "@/app/Components/Blog/CommentForm";
+import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
 
 export async function generateMetadata({ params }) {
     await connectDB();
@@ -86,7 +87,7 @@ const BlogDetailPage = async ({ params }) => {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="blog-details-thumb">
-                                        <Image src={item.coverImage} alt={item.title} width={856} height={501} />
+                                        <Image src={getCloudinaryUrl(item.coverImage, 1200, 700) || '/assets/images/blog1.png'} alt={item.title} width={856} height={501} style={{ width: '100%', height: 'auto' }} />
                                     </div>
                                     <div className="blog-details-content">
                                         <div className="meta-blog">

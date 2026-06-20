@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
+import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
 
 export async function generateMetadata({ params }) {
     await connectDB();
@@ -71,7 +72,7 @@ const SolutionDetailPage = async ({ params }) => {
                             <div className="project-details">
                                 <div className="project-details-thumb">
                                     <Image
-                                        src={item.image}
+                                        src={getCloudinaryUrl(item.image, 1200, 700) || '/assets/images/inner/service-details.png'}
                                         alt={item.title}
                                         width={1296}
                                         height={500}

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import connectDB from "@/lib/mongodb";
 import mongoose from "mongoose";
+import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
 
 export async function generateMetadata({ params }) {
     await connectDB();
@@ -73,7 +74,7 @@ const CaseStudyPage = async ({ params }) => {
                     <div className="row">
                         <div className="project-details">
                             <div className="project-details-thumb">
-                                <Image src={item.coverImage} alt="img" width={1296} height={673} />
+                                <Image src={getCloudinaryUrl(item.coverImage, 1200, 700) || '/assets/images/inner/service-details.png'} alt={item.title} width={1296} height={673} style={{ width: '100%', height: 'auto' }} />
                             </div>
                         </div>
                     </div>

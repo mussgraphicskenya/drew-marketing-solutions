@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import connectDB from "@/lib/mongodb";
 import mongoose from "mongoose";
+import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
 
 const CaseStudy = async () => {
     noStore();
@@ -37,7 +38,7 @@ const CaseStudy = async () => {
                             </div>
                             <div className="col-lg-6 col-md-6">
                                 <div className="case-studies-thumb">
-                                    <Image src={data[0].coverImage || '/assets/images/home-3/case-studies.png'} alt={data[0].title || 'Case Study'} width={568} height={424} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+                                    <Image src={getCloudinaryUrl(data[0].coverImage, 568, 424) || '/assets/images/home-3/case-studies.png'} alt={data[0].title || 'Case Study'} width={568} height={424} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
                                 </div>
                             </div>
                         </div>
@@ -47,7 +48,7 @@ const CaseStudy = async () => {
                     <div className="col-lg-6">
                         <div className="case-studies-single-box">
                             <div className="case-studies-thumb">
-                                <Image src={data[1].coverImage || '/assets/images/home-3/case-studies2.png'} alt={data[1].title || 'Case Study'} width={636} height={454} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+                                <Image src={getCloudinaryUrl(data[1].coverImage, 636, 454) || '/assets/images/home-3/case-studies2.png'} alt={data[1].title || 'Case Study'} width={636} height={454} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
                                 <div className="case-studie-content">
                                     <h3><Link href={`/project/${data[1].slug}`}>{data[1].title}</Link></h3>
                                     <h6>{data[1].industry}</h6>
@@ -63,7 +64,7 @@ const CaseStudy = async () => {
                     <div className="col-lg-6">
                         <div className="case-studies-single-box">
                             <div className="case-studies-thumb">
-                                <Image src={data[2].coverImage || '/assets/images/home-3/case-studies3.png'} alt={data[2].title || 'Case Study'} width={636} height={454} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+                                <Image src={getCloudinaryUrl(data[2].coverImage, 636, 454) || '/assets/images/home-3/case-studies3.png'} alt={data[2].title || 'Case Study'} width={636} height={454} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
                                 <div className="case-studie-content">
                                     <h3><Link href={`/project/${data[2].slug}`}>{data[2].title}</Link></h3>
                                     <h6>{data[2].industry}</h6>

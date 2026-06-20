@@ -3,12 +3,13 @@ import cloudinary from '@/lib/cloudinary';
 
 // Transformation presets keyed by upload type
 const TRANSFORMS = {
-    'case-study':     [{ width: 606,  height: 447, crop: 'fill', gravity: 'auto' }],
-    'insight':        [{ width: 364,  height: 248, crop: 'fill', gravity: 'auto' }],
-    'testimonial':    [{ width: 330,  height: 370, crop: 'fill', gravity: 'auto' }],
-    'solution-image': [{ width: 306,  height: 204, crop: 'fill', gravity: 'auto' }],
-    'solution-icon':  [{ width: 35,   height: 35,  crop: 'fill', gravity: 'auto' }],
-    'team':           [{ width: 306,  height: 388, crop: 'fill', gravity: 'auto' }],
+    'case-study':     [{ width: 1200, height: 900,  crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
+    'insight':        [{ width: 1200, height: 800,  crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
+    'testimonial':    [{ width: 800,  height: 900,  crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
+    'solution-image': [{ width: 1200, height: 800,  crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
+    'solution-icon':  [{ width: 200,  height: 200,  crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
+    'team':           [{ width: 800,  height: 1000, crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
+    'general':        [{ width: 1600, height: 1600, crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
 };
 
 export async function POST(request) {

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
+import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
 
 const Blog3 = async ({ category }) => {
     noStore();
@@ -47,7 +48,7 @@ const Blog3 = async ({ category }) => {
                             <div key={i} className="col-lg-4 col-md-6">
                                 <div className="single-blog-box">
                                     <div className="single-blog-thumb">
-                                        <Image src={item.coverImage || '/assets/images/blog1.png'} alt={item.title || 'Insight'} width={364} height={248} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+                                        <Image src={getCloudinaryUrl(item.coverImage, 364, 248) || '/assets/images/blog1.png'} alt={item.title || 'Insight'} width={364} height={248} style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
                                     </div>
                                     <div className="blog-box-content">
                                         <div className="meta-blog">

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import SectionTitle from '../Common/SectionTitle';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
+import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
 
 const Team1 = async () => {
     noStore();
@@ -32,7 +33,7 @@ const Team1 = async () => {
                             <div className="single-team-box">
                                 <div className="single-team-thumb">
                                     <Image
-                                        src={item.image || '/assets/images/home-two/team-thu.png'}
+                                        src={getCloudinaryUrl(item.image, 306, 388) || '/assets/images/home-two/team-thu.png'}
                                         alt={item.name || 'Team member'}
                                         width={306}
                                         height={388}

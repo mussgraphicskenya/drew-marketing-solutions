@@ -3,6 +3,7 @@ import SectionTitle from '../Common/SectionTitle';
 import Link from 'next/link';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
+import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
 
 const thumbs = [
     '/assets/images/home-3/ser-thumb.png',
@@ -131,7 +132,7 @@ const Services3 = async () => {
                                 {/* Thumbnail image */}
                                 <div className="service-thumb">
                                     <img
-                                        src={item.image || thumbs[i % 3]}
+                                        src={getCloudinaryUrl(item.image, 361, 200) || thumbs[i % 3]}
                                         alt={item.title || 'service'}
                                         width={361}
                                         height={200}

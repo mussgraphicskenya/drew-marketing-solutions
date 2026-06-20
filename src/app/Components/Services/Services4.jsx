@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import mongoose from "mongoose";
 import connectDB from "@/lib/mongodb";
+import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
 
 // Inline model — guarded so hot-reload doesn't re-register it
 const solutionSchema = new mongoose.Schema(
@@ -136,7 +137,7 @@ const Services4 = async () => {
                                     {/* ── Service thumb image — plain img so width:100% applies ── */}
                                     <div className="service-thumb">
                                         <img
-                                            src={item.image || thumbs[i % 4]}
+                                            src={getCloudinaryUrl(item.image, 306, 204) || thumbs[i % 4]}
                                             alt={item.title || 'service'}
                                             width={306}
                                             height={204}
