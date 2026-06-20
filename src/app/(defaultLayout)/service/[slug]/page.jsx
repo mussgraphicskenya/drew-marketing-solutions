@@ -205,30 +205,30 @@ const SolutionDetailPage = async ({ params }) => {
                                         </div>
                                     )}
 
-                                    {/* ── Downloads widget ──
-                                     *  Issue found: there is no /api/upload-pdf route in this project
-                                     *  and no seed-solution-details.cjs script exists.
-                                     *  The "Downloads" widget is rendered as static template links
-                                     *  until a PDF upload system is implemented.
-                                     *  Links use href="#" so they don't 404.
-                                     */}
-                                    <div className="widget-sidber">
-                                        <div className="widget-sidber-content">
-                                            <h4>Downloads</h4>
+                                    {/* ── Downloads widget — only shown when solution has PDFs ── */}
+                                    {item.downloads?.length > 0 && (
+                                        <div className="widget-sidber">
+                                            <div className="widget-sidber-content">
+                                                <h4>Downloads</h4>
+                                            </div>
+                                            <div className="widget-sidber-download-button">
+                                                {item.downloads.map((doc, i) => (
+                                                    <a
+                                                        key={i}
+                                                        href={doc.fileUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        download
+                                                        className={i === 0 ? '' : 'active'}
+                                                    >
+                                                        <i className="bi bi-file-earmark-pdf"></i>
+                                                        {doc.title || 'Download'}
+                                                        <span><i className="bi bi-download"></i></span>
+                                                    </a>
+                                                ))}
+                                            </div>
                                         </div>
-                                        <div className="widget-sidber-download-button">
-                                            <a href="/contact">
-                                                <i className="bi bi-file-earmark-pdf"></i>
-                                                Service Overview
-                                                <span><i className="bi bi-arrow-right"></i></span>
-                                            </a>
-                                            <a className="active" href="/contact">
-                                                <i className="bi bi-file-earmark-pdf"></i>
-                                                Capabilities Deck
-                                                <span><i className="bi bi-arrow-right"></i></span>
-                                            </a>
-                                        </div>
-                                    </div>
+                                    )}
 
                                     {/* Contact widget */}
                                     <div className="widget-sidber-contact-box">

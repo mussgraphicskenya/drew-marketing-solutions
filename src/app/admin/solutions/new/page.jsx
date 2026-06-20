@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ImageUpload from '@/app/Components/Admin/ImageUpload';
+import PdfUpload from '@/app/Components/Admin/PdfUpload';
 
 export default function NewSolutionPage() {
     const router = useRouter();
     const [form, setForm] = useState({
         title: '', slug: '', headline: '', body: '', includes: '',
         whyDrewTitle: '', whyDrewContent: '', secondBoxIcon: '',
-        icon: '', image: '', order: 1, featured: false,
+        icon: '', image: '', order: 1, featured: false, downloads: [],
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -31,9 +32,10 @@ export default function NewSolutionPage() {
         try {
             const payload = {
                 ...form,
-                includes: form.includes.split(',').map((s) => s.trim()).filter(Boolean),
-                order:    Number(form.order),
-                featured: Boolean(form.featured),
+                includes:  form.includes.split(',').map((s) => s.trim()).filter(Boolean),
+                order:     Number(form.order),
+                featured:  Boolean(form.featured),
+                downloads: form.downloads.filter(d => d.title || d.fileUrl),
             };
             const res = await fetch('/api/admin/solutions', {
                 method: 'POST',
@@ -169,6 +171,48 @@ export default function NewSolutionPage() {
                                 onChange={(url) => setForm((p) => ({ ...p, icon: url }))}
                                 type="solution-icon"
                             />
+                        </div>
+
+                        {/* ── Downloads section ── */}
+                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '20px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+                                <p style={{ color: '#9aa0b4', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', margin: 0 }}>Downloads (optional)</p>
+                                <button
+                                    type="button"
+                                    onClick={() => setForm(p => ({ ...p, downloads: [...p.downloads, { title: '', fileUrl: '' }] }))}
+                                    style={{ background: 'rgba(0,196,140,0.12)', border: '1px solid rgba(0,196,140,0.3)', color: '#00c48c', padding: '4px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}
+                                >
+                                    <i className="bi bi-plus-lg me-1"></i> Add Download
+                                </button>
+                            </div>
+                            {form.downloads.map((doc, i) => (
+                                <div key={i} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', padding: '16px', marginBottom: '12px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                                        <span style={{ color: '#9aa0b4', fontSize: '12px', fontWeight: 600 }}>Download #{i + 1}</span>
+                                        <button type="button" onClick={() => setForm(p => ({ ...p, downloads: p.downloads.filter((_, idx) => idx !== i) }))} style={{ background: 'none', border: '1px solid rgba(255,60,0,0.4)', color: '#ff7c5c', padding: '2px 10px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}>Remove</button>
+                                    </div>
+                                    <div style={{ marginBottom: '10px' }}>
+                                        <label style={labelStyle}>Label</label>
+                                        <input
+                                            value={doc.title}
+                                            onChange={(e) => setForm(p => { const d = [...p.downloads]; d[i] = { ...d[i], title: e.target.value }; return { ...p, downloads: d }; })}
+                                            style={inputStyle}
+                                            placeholder="e.g. Solution Overview"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label style={labelStyle}>PDF File</label>
+                                        <PdfUpload
+                                            value={doc.fileUrl}
+                                            onChange={(url) => setForm(p => { const d = [...p.downloads]; d[i] = { ...d[i], fileUrl: url }; return { ...p, downloads: d }; })}
+                                            label={`download-${i}`}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                            {form.downloads.length === 0 && (
+                                <p style={{ color: '#3a4055', fontSize: '13px', fontStyle: 'italic' }}>No downloads added yet. Click "Add Download" to attach a PDF.</p>
+                            )}
                         </div>
 
                         {/* Featured toggle */}

@@ -13,6 +13,10 @@ const SolutionSchema = new mongoose.Schema({
     image:    { type: String },
     order:    { type: Number, default: 0 },
     featured: { type: Boolean, default: false },
+    downloads: [{
+        title:   { type: String },
+        fileUrl: { type: String },
+    }],
 }, { timestamps: true });
 
 export default mongoose.models.Solution || mongoose.model('Solution', SolutionSchema);
