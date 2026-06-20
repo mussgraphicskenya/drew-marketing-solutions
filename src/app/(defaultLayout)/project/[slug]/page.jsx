@@ -73,7 +73,7 @@ const CaseStudyPage = async ({ params }) => {
                 <div className="container">
                     <div className="row">
                         <div className="project-details">
-                            <div className="project-details-thumb" style={{ position: 'relative', width: '100%', paddingTop: '51.9%', overflow: 'hidden' }}>
+                            <div className="project-details-thumb" style={{ position: 'relative', width: '100%', paddingTop: '51.9%', overflow: 'hidden', borderRadius: '20px' }}>
                                 <Image
                                     src={item.coverImage || '/assets/images/inner/project-det-thu.png'}
                                     alt={item.title}
@@ -113,7 +113,7 @@ const CaseStudyPage = async ({ params }) => {
                                     <div className="row align-items-center">
                                         <div className="col-lg-6">
                                             {item.secondaryImage ? (
-                                                <div className="project-details-item-images" style={{ position: 'relative', width: '100%', paddingTop: '68.3%', overflow: 'hidden', borderRadius: '8px' }}>
+                                                <div className="project-details-item-images" style={{ position: 'relative', width: '100%', paddingTop: '68.3%', overflow: 'hidden', borderRadius: '20px' }}>
                                                     <Image
                                                         src={getCloudinaryUrl(item.secondaryImage, 416, 284) || item.secondaryImage}
                                                         alt={`${item.title} – secondary`}
