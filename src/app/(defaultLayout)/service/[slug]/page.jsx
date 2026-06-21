@@ -135,11 +135,12 @@ const SolutionDetailPage = async ({ params }) => {
                                         {/* Right box: Why Drew? — fully dynamic from DB */}
                                         <div className={includes.length > 0 ? 'col-lg-6 col-md-6' : 'col-lg-12'}>
                                             <div className="service-details-icon-box">
-                                                {/* Optional icon — only renders if set in admin */}
-                                                {item.secondBoxIcon && (
+                                                {/* Icon above title — reads whyDrewIcon first, falls back to
+                                                    secondBoxIcon for documents seeded before this field existed */}
+                                                {(item.whyDrewIcon || item.secondBoxIcon) && (
                                                     <div className="service-det-icon">
                                                         <img
-                                                            src={item.secondBoxIcon}
+                                                            src={item.whyDrewIcon || item.secondBoxIcon}
                                                             alt=""
                                                             style={{ width: '56px', height: '60px', objectFit: 'contain' }}
                                                         />

@@ -10,7 +10,8 @@ export default function NewSolutionPage() {
     const router = useRouter();
     const [form, setForm] = useState({
         title: '', slug: '', headline: '', body: '', includes: '',
-        whyDrewTitle: '', whyDrewContent: '', secondBoxIcon: '',
+        whyDrewTitle: '', whyDrewContent: '', whyDrewIcon: '',
+        secondBoxIcon: '',
         icon: '', image: '', order: 1, featured: false, downloads: [],
     });
     const [loading, setLoading] = useState(false);
@@ -136,6 +137,19 @@ export default function NewSolutionPage() {
                                 <div>
                                     <label style={labelStyle}>Box Content</label>
                                     <textarea name="whyDrewContent" rows={3} value={form.whyDrewContent} onChange={handleChange} style={textareaStyle} placeholder="We combine sharp strategic thinking with deep local market knowledge..." />
+                                </div>
+                                <div>
+                                    <label style={labelStyle}>Box Icon <span style={{ color: '#5a6070', fontWeight: 400 }}>(optional — shown above the title)</span></label>
+                                    <ImageUpload
+                                        value={form.whyDrewIcon}
+                                        onChange={(url) => setForm((p) => ({ ...p, whyDrewIcon: url }))}
+                                        type="solution-icon"
+                                    />
+                                    {form.whyDrewIcon && (
+                                        <button type="button" onClick={() => setForm(p => ({ ...p, whyDrewIcon: '' }))} style={{ marginTop: '8px', background: 'none', border: '1px solid rgba(255,60,0,0.4)', color: '#ff7c5c', padding: '4px 12px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}>
+                                            ✕ Remove Icon
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </div>

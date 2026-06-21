@@ -8,7 +8,8 @@ const SolutionSchema = new mongoose.Schema({
     includes: [{ type: String }],
     whyDrewTitle:   { type: String },
     whyDrewContent: { type: String },
-    secondBoxIcon:  { type: String },
+    whyDrewIcon:    { type: String },   // optional icon shown above title in the Why Drew? box
+    secondBoxIcon:  { type: String },   // kept for backward-compat — superseded by whyDrewIcon
     icon:     { type: String },
     image:    { type: String },
     order:    { type: Number, default: 0 },
