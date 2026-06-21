@@ -131,7 +131,7 @@ export default function EditSolutionPage({ params }) {
 
                             {/* ── Why Drew? section ── */}
                             <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '20px' }}>
-                                <p style={{ color: '#9aa0b4', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '14px' }}>"Why Drew?" Box (optional)</p>
+                                <p style={{ color: '#9aa0b4', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '14px' }}>&quot;Why Drew?&quot; Box (optional)</p>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                                     <div>
                                         <label style={labelStyle}>Box Title</label>
@@ -215,7 +215,7 @@ export default function EditSolutionPage({ params }) {
                                     </div>
                                 ))}
                                 {!(form.downloads?.length) && (
-                                    <p style={{ color: '#3a4055', fontSize: '13px', fontStyle: 'italic' }}>No downloads added yet. Click "Add Download" to attach a PDF.</p>
+                                    <p style={{ color: '#3a4055', fontSize: '13px', fontStyle: 'italic' }}>No downloads added yet. Click &quot;Add Download&quot; to attach a PDF.</p>
                                 )}
                             </div>
 
