@@ -92,7 +92,7 @@ const SolutionDetailPage = async ({ params }) => {
                                         <Image
                                             src={item.image
                                                 ? (getCloudinaryUrl(item.image, 856, 504) || item.image)
-                                                : '/assets/images/inner/service-details.png'}
+                                                : 'https://picsum.photos/seed/svc-detail/856/504'}
                                             alt={item.title}
                                             fill
                                             style={{ objectFit: 'cover', objectPosition: 'center' }}

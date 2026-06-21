@@ -24,7 +24,8 @@ const Projecr3 = async () => {
         title:      item.title    || '',
         category:   item.industry || 'General',
         slug:       item.slug     || '',
-        img:        getCloudinaryUrl(item.coverImage, 606, 447) || '/assets/images/home-3/case-studies.png',
+        img:        getCloudinaryUrl(item.coverImage, 606, 447)
+                    || `https://picsum.photos/seed/case-${i + 10}/606/447`,
     }));
 
     // Distinct industry values for filter buttons

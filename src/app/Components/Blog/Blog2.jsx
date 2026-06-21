@@ -34,8 +34,8 @@ const Blog2 = async () => {
                     <div key={i} className="col-lg-4 col-md-6">
                         <div className="single-blog-box">
                             <div className="single-blog-thumb">
-                                 <Image
-                                    src={getCloudinaryUrl(item.coverImage, 416, 283) || '/assets/images/blog1.png'}
+                                     <Image
+                                        src={getCloudinaryUrl(item.coverImage, 416, 283) || `https://picsum.photos/seed/blog2-${i + 1}/416/283`}
                                     alt={item.title || 'Insight'}
                                     width={416}
                                     height={283}

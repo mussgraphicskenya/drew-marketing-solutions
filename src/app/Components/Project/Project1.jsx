@@ -25,7 +25,8 @@ const Project1 = async ({ bgImage, ClassAdd }) => {
         title:      item.title     || '',
         industry:   item.industry  || '',
         slug:       item.slug      || '',
-        coverImage: getCloudinaryUrl(item.coverImage, 331, 340) || '/assets/images/home-3/project1.jpg',
+        coverImage: getCloudinaryUrl(item.coverImage, 331, 340)
+                    || `https://picsum.photos/seed/cs-${i + 1}/331/340`,
     }));
 
     return <Project1Slider data={data} bgImage={bgImage} ClassAdd={ClassAdd} />;

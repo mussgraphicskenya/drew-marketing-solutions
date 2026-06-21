@@ -75,7 +75,7 @@ const CaseStudyPage = async ({ params }) => {
                         <div className="project-details">
                             <div className="project-details-thumb" style={{ position: 'relative', width: '100%', paddingTop: '51.9%', overflow: 'hidden', borderRadius: '20px' }}>
                                 <Image
-                                    src={item.coverImage || '/assets/images/inner/project-det-thu.png'}
+                                    src={item.coverImage || 'https://picsum.photos/seed/cs-detail/1296/673'}
                                     alt={item.title}
                                     fill
                                     style={{ objectFit: 'cover', objectPosition: 'center' }}

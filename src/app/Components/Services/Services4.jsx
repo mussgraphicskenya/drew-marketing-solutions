@@ -26,10 +26,10 @@ const Solution =
 
 // Fallback thumb images — one per slot, cycling with i % 4
 const thumbs = [
-    '/assets/images/inner/service-thumb1.png',
-    '/assets/images/inner/service-thumb2.png',
-    '/assets/images/inner/service-thumb3.png',
-    '/assets/images/inner/service-thumb4.png',
+    'https://picsum.photos/seed/sol-1/306/204',
+    'https://picsum.photos/seed/sol-2/306/204',
+    'https://picsum.photos/seed/sol-3/306/204',
+    'https://picsum.photos/seed/sol-4/306/204',
 ];
 
 // Single icon file confirmed present in /assets/images/inner/

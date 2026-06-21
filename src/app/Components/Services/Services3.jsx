@@ -6,9 +6,9 @@ import mongoose from 'mongoose';
 import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
 
 const thumbs = [
-    '/assets/images/home-3/ser-thumb.png',
-    '/assets/images/home-3/ser-thumb2.png',
-    '/assets/images/home-3/ser-thumb3.png',
+    'https://picsum.photos/seed/serv3-1/361/200',
+    'https://picsum.photos/seed/serv3-2/361/200',
+    'https://picsum.photos/seed/serv3-3/361/200',
 ];
 
 const icons = [

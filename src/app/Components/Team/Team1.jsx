@@ -33,7 +33,8 @@ const Team1 = async () => {
                             <div className="single-team-box">
                                 <div className="single-team-thumb">
                                     <Image
-                                        src={getCloudinaryUrl(item.image, 306, 388) || '/assets/images/home-two/team-thu.png'}
+                                        src={getCloudinaryUrl(item.image, 306, 388)
+                                            || `https://picsum.photos/seed/team-${i + 1}/306/388`}
                                         alt={item.name || 'Team member'}
                                         width={306}
                                         height={388}
