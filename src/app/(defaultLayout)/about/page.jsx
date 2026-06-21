@@ -20,7 +20,7 @@ const page = () => {
         <div className='about-page'>
             <BreadCumb Title="About Drew"></BreadCumb>
             <About4
-                MainImg="/assets/images/inner/about-us-thu.png"
+                MainImg="https://picsum.photos/seed/about-us/635/520"
                 SubTitle="DREW MARKETING SOLUTIONS"
                 Title="We didn't start Drew to do marketing.<br> We started it to <span>fix it.</span>"
                 Content="We are a Nairobi-based strategic growth partner helping ambitious brands align their marketing to their business goals."

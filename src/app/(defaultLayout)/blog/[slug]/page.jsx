@@ -324,7 +324,7 @@ const BlogDetailPage = async ({ params }) => {
                                             <div key={i} className="sidber-widget-recent-post">
                                                 <div className="recent-widget-thumb">
                                                     <Image
-                                                        src={post.coverImage || "/assets/images/inner/recent-post.png"}
+                                                        src={post.coverImage || `https://picsum.photos/seed/recent-${i + 1}/70/70`}
                                                         alt="img"
                                                         width={70}
                                                         height={70}

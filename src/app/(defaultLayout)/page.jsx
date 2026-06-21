@@ -26,7 +26,7 @@ const page = () => {
             <Services3></Services3>
             <About3
                 bgImg="/assets/images/home-3/about3-bg.png"
-                MainImg="/assets/images/home-3/about-thu3.png"
+                MainImg="https://picsum.photos/seed/about-drew/633/623"
                 SubTitle="ABOUT DREW"
                 Title="Strategy-led growth for brands ready to <span>align.</span>"
                 Content="We start with understanding before execution. Because real growth doesn't come from being everywhere — it comes from being intentional, relevant, and precise."
