@@ -44,7 +44,9 @@ export async function POST(request) {
                     {
                         folder:          'drew-marketing/pdfs',
                         resource_type:   'raw',
-                        format:          'pdf',      // forces .pdf extension in the URL
+                        type:            'upload',       // must be 'upload' for public delivery
+                        access_mode:     'public',       // explicitly mark as publicly accessible
+                        format:          'pdf',
                         use_filename:    true,
                         unique_filename: true,
                     },
