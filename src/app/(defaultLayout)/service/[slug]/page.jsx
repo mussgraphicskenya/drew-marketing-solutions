@@ -212,20 +212,36 @@ const SolutionDetailPage = async ({ params }) => {
                                                 <h4>Downloads</h4>
                                             </div>
                                             <div className="widget-sidber-download-button">
-                                                {item.downloads.map((doc, i) => (
-                                                    <a
-                                                        key={i}
-                                                        href={doc.fileUrl}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        download
-                                                        className={i === 0 ? '' : 'active'}
-                                                    >
-                                                        <i className="bi bi-file-earmark-pdf"></i>
-                                                        {doc.title || 'Download'}
-                                                        <span><i className="bi bi-download"></i></span>
-                                                    </a>
-                                                ))}
+                                                {item.downloads.map((doc, i) => {
+                                                    // Build a safe filename: "Solution-Overview.pdf"
+                                                    const safeTitle = (doc.title || 'Download')
+                                                        .replace(/[^a-zA-Z0-9\s&-]/g, '')
+                                                        .trim()
+                                                        .replace(/\s+/g, '-');
+                                                    const filename = safeTitle.endsWith('.pdf')
+                                                        ? safeTitle
+                                                        : `${safeTitle}.pdf`;
+
+                                                    // Ensure URL itself ends in .pdf (fixes .crdownload issue)
+                                                    const href = doc.fileUrl?.endsWith('.pdf')
+                                                        ? doc.fileUrl
+                                                        : `${doc.fileUrl}.pdf`;
+
+                                                    return (
+                                                        <a
+                                                            key={i}
+                                                            href={href}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            download={filename}
+                                                            className={i === 0 ? '' : 'active'}
+                                                        >
+                                                            <i className="bi bi-file-earmark-pdf"></i>
+                                                            {doc.title || 'Download'}
+                                                            <span><i className="bi bi-download"></i></span>
+                                                        </a>
+                                                    );
+                                                })}
                                             </div>
                                         </div>
                                     )}

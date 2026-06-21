@@ -42,11 +42,16 @@ async function uploadPdfFromUrl(url, publicId) {
                 public_id:     publicId,
                 folder:        'drew-marketing/pdfs',
                 resource_type: 'raw',
+                format:        'pdf',   // forces .pdf extension in the stored URL
                 overwrite:     true,
             },
             (error, result) => {
                 if (error) return reject(error);
-                resolve(result.secure_url);
+                // Sanitise: ensure URL ends in .pdf
+                const fileUrl = result.secure_url.endsWith('.pdf')
+                    ? result.secure_url
+                    : result.secure_url + '.pdf';
+                resolve(fileUrl);
             }
         );
 
@@ -86,9 +91,10 @@ async function main() {
         console.log(`Found ${solutions.length} solutions.\n`);
 
         for (const sol of solutions) {
-            // Skip if already has downloads with a real fileUrl
-            if (sol.downloads?.length && sol.downloads.some(d => d.fileUrl?.startsWith('http'))) {
-                console.log(`  ⏭  "${sol.title}" — already has downloads, skipping.`);
+            // Skip only if already has a proper .pdf URL — re-upload otherwise
+            const hasGoodUrl = sol.downloads?.some(d => d.fileUrl?.endsWith('.pdf'));
+            if (hasGoodUrl) {
+                console.log(`  ✓  "${sol.title}" — URL already ends in .pdf, skipping.`);
                 continue;
             }
 

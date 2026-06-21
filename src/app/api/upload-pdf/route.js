@@ -36,14 +36,16 @@ export async function POST(request) {
 
         console.log(`[upload-pdf] Uploading "${originalName}" (${(file.size / 1024).toFixed(0)} KB) to Cloudinary…`);
 
-        // Upload to Cloudinary — resource_type:'auto' is required for non-image files
+        // Upload to Cloudinary — resource_type:'raw' + format:'pdf' ensures the
+        // stored URL ends in .pdf so browsers serve correct Content-Type on download.
         const result = await new Promise((resolve, reject) => {
             cloudinary.uploader
                 .upload_stream(
                     {
-                        folder:        'drew-marketing/pdfs',
-                        resource_type: 'raw',          // 'raw' for PDFs gives a stable, direct download URL
-                        use_filename:  true,
+                        folder:          'drew-marketing/pdfs',
+                        resource_type:   'raw',
+                        format:          'pdf',      // forces .pdf extension in the URL
+                        use_filename:    true,
                         unique_filename: true,
                     },
                     (error, result) => {
@@ -54,10 +56,16 @@ export async function POST(request) {
                 .end(buffer);
         });
 
-        console.log(`[upload-pdf] Uploaded OK → ${result.secure_url}`);
+        // Ensure the returned URL ends in .pdf (Cloudinary should handle this
+        // with format:'pdf', but we sanitise as a safety net)
+        const secureUrl = result.secure_url.endsWith('.pdf')
+            ? result.secure_url
+            : result.secure_url + '.pdf';
+
+        console.log(`[upload-pdf] Uploaded OK → ${secureUrl}`);
 
         return NextResponse.json({
-            url:      result.secure_url,
+            url:      secureUrl,
             filename: originalName,
             size:     file.size,
             publicId: result.public_id,
