@@ -1,4 +1,4 @@
-import { unstable_noStore as noStore } from 'next/cache';
+﻿import { unstable_noStore as noStore } from 'next/cache';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
 import Link from 'next/link';
@@ -56,7 +56,7 @@ export default async function MessagesPage({ searchParams }) {
                         <i className="bi bi-envelope-fill me-2" style={{ color: '#a78bfa' }}></i>Messages
                     </span>
                     {unreadCount > 0 && (
-                        <span style={{ background: '#ff3c00', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '2px 8px', borderRadius: '20px', flexShrink: 0 }}>
+                        <span style={{ background: '#F7941D', color: '#fff', fontSize: '11px', fontWeight: 700, padding: '2px 8px', borderRadius: '20px', flexShrink: 0 }}>
                             {unreadCount}
                         </span>
                     )}
@@ -69,7 +69,7 @@ export default async function MessagesPage({ searchParams }) {
                     <h1 style={{ color: '#fff', fontSize: '20px', fontWeight: 700, margin: '0 0 4px' }}>Contact Messages</h1>
                     <p style={{ color: '#9aa0b4', margin: 0, fontSize: '14px' }}>
                         {total} message{total !== 1 ? 's' : ''}
-                        {unreadCount > 0 && <span style={{ color: '#ff7c5c', fontWeight: 600 }}> — {unreadCount} unread</span>}
+                        {unreadCount > 0 && <span style={{ color: '#F9B45E', fontWeight: 600 }}> — {unreadCount} unread</span>}
                     </p>
                 </div>
 
@@ -99,7 +99,7 @@ export default async function MessagesPage({ searchParams }) {
                                                 <i className="bi bi-check2-circle me-1"></i>Read
                                             </span>
                                         ) : (
-                                            <span style={{ background: 'rgba(255,60,0,0.15)', color: '#ff7c5c', fontSize: '11px', fontWeight: 700, padding: '2px 10px', borderRadius: '20px' }}>
+                                            <span style={{ background: 'rgba(247,148,29,0.15)', color: '#F9B45E', fontSize: '11px', fontWeight: 700, padding: '2px 10px', borderRadius: '20px' }}>
                                                 UNREAD
                                             </span>
                                         )}

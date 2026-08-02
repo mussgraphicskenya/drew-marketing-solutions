@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers';
+﻿import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import connectDB from '@/lib/mongodb';
@@ -30,8 +30,8 @@ const COLLECTIONS = [
         label:       'Case Studies',
         description: 'Client project case study documents',
         icon:        'bi-briefcase-fill',
-        color:       '#ff3c00',
-        bg:          'rgba(255,60,0,0.12)',
+        color:       '#F7941D',
+        bg:          'rgba(247,148,29,0.12)',
         href:        '/admin/case-studies',
     },
     {
@@ -145,7 +145,7 @@ export default async function AdminDashboard() {
                             width:          '36px',
                             height:         '36px',
                             borderRadius:   '8px',
-                            background:     '#ff3c00',
+                            background:     '#F7941D',
                             display:        'flex',
                             alignItems:     'center',
                             justifyContent: 'center',
@@ -159,8 +159,8 @@ export default async function AdminDashboard() {
                         <span
                             style={{
                                 marginLeft:   '10px',
-                                background:   'rgba(255,60,0,0.18)',
-                                color:        '#ff7c5c',
+                                background:   'rgba(247,148,29,0.18)',
+                                color:        '#F9B45E',
                                 fontSize:     '11px',
                                 fontWeight:   600,
                                 padding:      '2px 8px',
@@ -191,10 +191,10 @@ export default async function AdminDashboard() {
                         <button
                             type="submit"
                             style={{
-                                background:   'rgba(255,60,0,0.15)',
-                                border:       '1px solid rgba(255,60,0,0.25)',
+                                background:   'rgba(247,148,29,0.15)',
+                                border:       '1px solid rgba(247,148,29,0.25)',
                                 borderRadius: '7px',
-                                color:        '#ff7c5c',
+                                color:        '#F9B45E',
                                 fontSize:     '13px',
                                 fontWeight:   600,
                                 padding:      '6px 16px',
@@ -235,7 +235,7 @@ export default async function AdminDashboard() {
                 >
                     {/* Total count row */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                        <i className="bi bi-database-fill-check" style={{ color: '#ff3c00', fontSize: '26px', flexShrink: 0 }}></i>
+                        <i className="bi bi-database-fill-check" style={{ color: '#F7941D', fontSize: '26px', flexShrink: 0 }}></i>
                         <div>
                             <div style={{ color: '#fff', fontWeight: 700, fontSize: '20px' }}>{total} Documents</div>
                             <div style={{ color: '#9aa0b4', fontSize: '13px' }}>Total records in MongoDB</div>
@@ -303,7 +303,7 @@ export default async function AdminDashboard() {
                                         {col.description}
                                     </p>
                                     {col.unreadCount > 0 && (
-                                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '8px', background: 'rgba(255,60,0,0.15)', color: '#ff7c5c', fontSize: '12px', fontWeight: 700, padding: '3px 10px', borderRadius: '20px' }}>
+                                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '8px', background: 'rgba(247,148,29,0.15)', color: '#F9B45E', fontSize: '12px', fontWeight: 700, padding: '3px 10px', borderRadius: '20px' }}>
                                             <i className="bi bi-envelope-exclamation-fill"></i>
                                             {col.unreadCount} {col.badgeLabel || 'unread'}
                                         </span>

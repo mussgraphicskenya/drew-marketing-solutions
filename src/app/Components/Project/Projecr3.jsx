@@ -19,7 +19,7 @@ const Projecr3 = async () => {
         .sort({ createdAt: -1 })
         .toArray();
 
-    const data = raw.map((item) => ({
+    const data = raw.map((item, i) => ({
         _id:        String(item._id),
         title:      item.title    || '',
         category:   item.industry || 'General',

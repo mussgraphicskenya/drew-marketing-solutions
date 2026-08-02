@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 
@@ -60,7 +60,7 @@ const NewsletterForm = () => {
                 </p>
             )}
             {(status === 'error' || status === 'duplicate') && (
-                <p style={{ color: '#ff7c5c', fontSize: '13px', marginTop: '10px', fontWeight: 600 }}>
+                <p style={{ color: '#F9B45E', fontSize: '13px', marginTop: '10px', fontWeight: 600 }}>
                     <i className="bi bi-exclamation-circle-fill me-1"></i>
                     {status === 'duplicate'
                         ? 'Already subscribed or something went wrong.'

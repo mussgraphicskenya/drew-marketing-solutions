@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -70,7 +70,7 @@ export default function NewSolutionPage() {
                 <h1 style={{ color: '#fff', fontSize: '22px', fontWeight: 700, marginBottom: '24px' }}>Add New Solution</h1>
 
                 {error && (
-                    <div style={{ background: 'rgba(255,60,0,0.12)', border: '1px solid rgba(255,60,0,0.3)', color: '#ff7c5c', borderRadius: '8px', padding: '12px 16px', marginBottom: '20px', fontSize: '14px' }}>
+                    <div style={{ background: 'rgba(247,148,29,0.12)', border: '1px solid rgba(247,148,29,0.3)', color: '#F9B45E', borderRadius: '8px', padding: '12px 16px', marginBottom: '20px', fontSize: '14px' }}>
                         <i className="bi bi-exclamation-circle me-2"></i>{error}
                     </div>
                 )}
@@ -146,7 +146,7 @@ export default function NewSolutionPage() {
                                         type="solution-icon"
                                     />
                                     {form.whyDrewIcon && (
-                                        <button type="button" onClick={() => setForm(p => ({ ...p, whyDrewIcon: '' }))} style={{ marginTop: '8px', background: 'none', border: '1px solid rgba(255,60,0,0.4)', color: '#ff7c5c', padding: '4px 12px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}>
+                                        <button type="button" onClick={() => setForm(p => ({ ...p, whyDrewIcon: '' }))} style={{ marginTop: '8px', background: 'none', border: '1px solid rgba(247,148,29,0.4)', color: '#F9B45E', padding: '4px 12px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}>
                                             ✕ Remove Icon
                                         </button>
                                     )}
@@ -163,7 +163,7 @@ export default function NewSolutionPage() {
                                 type="solution-icon"
                             />
                             {form.secondBoxIcon && (
-                                <button type="button" onClick={() => setForm(p => ({ ...p, secondBoxIcon: '' }))} style={{ marginTop: '8px', background: 'none', border: '1px solid rgba(255,60,0,0.4)', color: '#ff7c5c', padding: '4px 12px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}>
+                                <button type="button" onClick={() => setForm(p => ({ ...p, secondBoxIcon: '' }))} style={{ marginTop: '8px', background: 'none', border: '1px solid rgba(247,148,29,0.4)', color: '#F9B45E', padding: '4px 12px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}>
                                     ✕ Remove Icon
                                 </button>
                             )}
@@ -203,7 +203,7 @@ export default function NewSolutionPage() {
                                 <div key={i} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', padding: '16px', marginBottom: '12px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                                         <span style={{ color: '#9aa0b4', fontSize: '12px', fontWeight: 600 }}>Download #{i + 1}</span>
-                                        <button type="button" onClick={() => setForm(p => ({ ...p, downloads: p.downloads.filter((_, idx) => idx !== i) }))} style={{ background: 'none', border: '1px solid rgba(255,60,0,0.4)', color: '#ff7c5c', padding: '2px 10px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}>Remove</button>
+                                        <button type="button" onClick={() => setForm(p => ({ ...p, downloads: p.downloads.filter((_, idx) => idx !== i) }))} style={{ background: 'none', border: '1px solid rgba(247,148,29,0.4)', color: '#F9B45E', padding: '2px 10px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}>Remove</button>
                                     </div>
                                     <div style={{ marginBottom: '10px' }}>
                                         <label style={labelStyle}>Label</label>

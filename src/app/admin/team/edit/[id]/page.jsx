@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -75,7 +75,7 @@ export default function EditTeamMemberPage({ params }) {
                 <h1 style={{ color: '#fff', fontSize: '22px', fontWeight: 700, marginBottom: '28px' }}>Edit Team Member</h1>
 
                 {error && (
-                    <div style={{ background: 'rgba(255,60,0,0.12)', border: '1px solid rgba(255,60,0,0.25)', borderRadius: '8px', padding: '12px 16px', color: '#ff7c5c', marginBottom: '20px', fontSize: '14px' }}>
+                    <div style={{ background: 'rgba(247,148,29,0.12)', border: '1px solid rgba(247,148,29,0.25)', borderRadius: '8px', padding: '12px 16px', color: '#F9B45E', marginBottom: '20px', fontSize: '14px' }}>
                         <i className="bi bi-exclamation-circle-fill me-2"></i>{error}
                     </div>
                 )}

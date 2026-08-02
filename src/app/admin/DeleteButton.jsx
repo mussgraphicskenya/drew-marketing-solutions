@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 
@@ -39,9 +39,9 @@ export default function DeleteButton({ id, collectionName, itemName }) {
             onClick={handleDelete}
             disabled={loading}
             style={{
-                background:   'rgba(255,60,0,0.12)',
-                border:       '1px solid rgba(255,60,0,0.25)',
-                color:        loading ? '#7a3020' : '#ff7c5c',
+                background:   'rgba(247,148,29,0.12)',
+                border:       '1px solid rgba(247,148,29,0.25)',
+                color:        loading ? '#7a3020' : '#F9B45E',
                 padding:      '5px 12px',
                 borderRadius: '6px',
                 cursor:       loading ? 'not-allowed' : 'pointer',

@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers';
+﻿import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export const metadata = {
@@ -61,7 +61,7 @@ export default function LoginPage({ searchParams }) {
                                 width:           '42px',
                                 height:          '42px',
                                 borderRadius:    '10px',
-                                background:      '#ff3c00',
+                                background:      '#F7941D',
                                 display:         'flex',
                                 alignItems:      'center',
                                 justifyContent:  'center',
@@ -92,10 +92,10 @@ export default function LoginPage({ searchParams }) {
                         <div
                             className="d-flex align-items-center gap-2 mb-4 p-3"
                             style={{
-                                background:   'rgba(255,60,0,0.15)',
-                                border:       '1px solid rgba(255,60,0,0.3)',
+                                background:   'rgba(247,148,29,0.15)',
+                                border:       '1px solid rgba(247,148,29,0.3)',
                                 borderRadius: '8px',
-                                color:        '#ff7c5c',
+                                color:        '#F9B45E',
                                 fontSize:     '14px',
                             }}
                         >
@@ -190,7 +190,7 @@ export default function LoginPage({ searchParams }) {
                             style={{
                                 width:        '100%',
                                 padding:      '13px',
-                                background:   '#ff3c00',
+                                background:   '#F7941D',
                                 border:       'none',
                                 borderRadius: '8px',
                                 color:        '#fff',

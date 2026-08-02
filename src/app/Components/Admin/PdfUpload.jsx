@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useRef } from 'react';
 
@@ -100,8 +100,8 @@ export default function PdfUpload({ value, onChange, label = 'PDF Document' }) {
                         onClick={handleRemove}
                         style={{
                             background: 'none',
-                            border: '1px solid rgba(255,60,0,0.4)',
-                            color: '#ff7c5c',
+                            border: '1px solid rgba(247,148,29,0.4)',
+                            color: '#F9B45E',
                             padding: '3px 10px',
                             borderRadius: '6px',
                             fontSize: '12px',
@@ -139,7 +139,7 @@ export default function PdfUpload({ value, onChange, label = 'PDF Document' }) {
             )}
 
             {error && (
-                <p style={{ color: '#ff7c5c', fontSize: '12px', marginTop: '6px' }}>
+                <p style={{ color: '#F9B45E', fontSize: '12px', marginTop: '6px' }}>
                     <i className="bi bi-exclamation-circle me-1"></i>{error}
                 </p>
             )}

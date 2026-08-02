@@ -111,7 +111,7 @@ const Form = () => {
                 </div>
             )}
             {status === 'error' && (
-                <div id="status" className="error" style={{ marginTop: '16px', color: '#ff3c00', fontWeight: 600, fontSize: '15px' }}>
+                <div id="status" className="error" style={{ marginTop: '16px', color: '#F7941D', fontWeight: 600, fontSize: '15px' }}>
                     <i className="bi bi-exclamation-circle-fill me-2"></i>
                     Something went wrong. Please try again.
                 </div>

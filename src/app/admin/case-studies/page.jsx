@@ -1,4 +1,4 @@
-import { unstable_noStore as noStore } from 'next/cache';
+﻿import { unstable_noStore as noStore } from 'next/cache';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
 import Link from 'next/link';
@@ -54,12 +54,12 @@ export default async function CaseStudiesPage({ searchParams }) {
                     </Link>
                     <span style={{ color: '#3a4055' }}>|</span>
                     <span style={{ color: '#fff', fontWeight: 600, fontSize: '15px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        <i className="bi bi-briefcase-fill me-2" style={{ color: '#ff3c00' }}></i>Case Studies
+                        <i className="bi bi-briefcase-fill me-2" style={{ color: '#F7941D' }}></i>Case Studies
                     </span>
                 </div>
                 <Link
                     href="/admin/case-studies/new"
-                    style={{ background: '#ff3c00', color: '#fff', padding: '8px 14px', borderRadius: '8px', textDecoration: 'none', fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}
+                    style={{ background: '#F7941D', color: '#fff', padding: '8px 14px', borderRadius: '8px', textDecoration: 'none', fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}
                 >
                     <i className="bi bi-plus-lg"></i> <span className="d-none d-sm-inline">Add New</span><span className="d-sm-none">Add</span>
                 </Link>
@@ -75,7 +75,7 @@ export default async function CaseStudiesPage({ searchParams }) {
                 {items.length === 0 ? (
                     <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '60px 20px', textAlign: 'center', color: '#9aa0b4' }}>
                         <i className="bi bi-inbox" style={{ fontSize: '40px', display: 'block', marginBottom: '12px' }}></i>
-                        No case studies yet. <Link href="/admin/case-studies/new" style={{ color: '#ff3c00' }}>Add the first one.</Link>
+                        No case studies yet. <Link href="/admin/case-studies/new" style={{ color: '#F7941D' }}>Add the first one.</Link>
                     </div>
                 ) : (
                     <>
@@ -103,7 +103,7 @@ export default async function CaseStudiesPage({ searchParams }) {
                                         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                                             <Link
                                                 href={`/admin/case-studies/edit/${item._id}`}
-                                                style={{ background: 'rgba(255,60,0,0.12)', border: '1px solid rgba(255,60,0,0.25)', color: '#ff7c5c', padding: '6px 14px', borderRadius: '6px', textDecoration: 'none', fontSize: '13px', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '5px' }}
+                                                style={{ background: 'rgba(247,148,29,0.12)', border: '1px solid rgba(247,148,29,0.25)', color: '#F9B45E', padding: '6px 14px', borderRadius: '6px', textDecoration: 'none', fontSize: '13px', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '5px' }}
                                             >
                                                 <i className="bi bi-pencil"></i> Edit
                                             </Link>
@@ -125,7 +125,7 @@ export default async function CaseStudiesPage({ searchParams }) {
                                         ← Previous
                                     </a>
                                 )}
-                                <span style={{ background: '#ff3c00', color: '#fff', padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600 }}>
+                                <span style={{ background: '#F7941D', color: '#fff', padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600 }}>
                                     Page {currentPage} of {totalPages}
                                 </span>
                                 {currentPage < totalPages && (

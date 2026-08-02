@@ -1,4 +1,4 @@
-import { unstable_noStore as noStore } from 'next/cache';
+﻿import { unstable_noStore as noStore } from 'next/cache';
 import BreadCumb from '@/app/Components/Common/BreadCumb';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -51,7 +51,7 @@ const SolutionDetailPage = async ({ params }) => {
         return (
             <div className="container" style={{ padding: '100px 0', textAlign: 'center' }}>
                 <h2 style={{ marginBottom: '20px' }}>Solution not found</h2>
-                <Link href="/service" style={{ color: '#ff3b00', fontWeight: 600 }}>
+                <Link href="/service" style={{ color: '#F7941D', fontWeight: 600 }}>
                     ← Back to All Solutions
                 </Link>
             </div>

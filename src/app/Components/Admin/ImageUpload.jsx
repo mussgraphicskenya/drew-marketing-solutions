@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useRef, useState } from 'react';
 
@@ -129,7 +129,7 @@ export default function ImageUpload({ value, onChange, type = 'general' }) {
 
             {/* Error */}
             {status === 'error' && (
-                <p style={{ color: '#ff7c5c', fontSize: '13px', marginTop: '8px', marginBottom: 0 }}>
+                <p style={{ color: '#F9B45E', fontSize: '13px', marginTop: '8px', marginBottom: 0 }}>
                     <i className="bi bi-exclamation-circle-fill me-1"></i>{errMsg}
                 </p>
             )}

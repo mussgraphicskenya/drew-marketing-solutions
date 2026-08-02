@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -109,7 +109,7 @@ export default function NewCaseStudyPage() {
                 </Link>
                 <span style={{ color: '#3a4055' }}>|</span>
                 <span style={{ color: '#fff', fontWeight: 600 }}>
-                    <i className="bi bi-plus-circle me-2" style={{ color: '#ff3c00' }}></i>New Case Study
+                    <i className="bi bi-plus-circle me-2" style={{ color: '#F7941D' }}></i>New Case Study
                 </span>
             </nav>
 
@@ -117,7 +117,7 @@ export default function NewCaseStudyPage() {
                 <h1 style={{ color: '#fff', fontSize: '22px', fontWeight: 700, marginBottom: '24px' }}>Add New Case Study</h1>
 
                 {error && (
-                    <div style={{ background: 'rgba(255,60,0,0.12)', border: '1px solid rgba(255,60,0,0.3)', color: '#ff7c5c', borderRadius: '8px', padding: '12px 16px', marginBottom: '20px', fontSize: '14px' }}>
+                    <div style={{ background: 'rgba(247,148,29,0.12)', border: '1px solid rgba(247,148,29,0.3)', color: '#F9B45E', borderRadius: '8px', padding: '12px 16px', marginBottom: '20px', fontSize: '14px' }}>
                         <i className="bi bi-exclamation-circle me-2"></i>{error}
                     </div>
                 )}
@@ -170,7 +170,7 @@ export default function NewCaseStudyPage() {
                                             style={{ ...inputStyle, flex: 1, marginBottom: 0 }}
                                             autoFocus
                                         />
-                                        <button type="button" onClick={handleAddCategory} disabled={addingCat || !newCatName.trim()} style={submitBtn('#ff3c00')}>
+                                        <button type="button" onClick={handleAddCategory} disabled={addingCat || !newCatName.trim()} style={submitBtn('#F7941D')}>
                                             {addingCat ? '…' : 'Add'}
                                         </button>
                                         <button type="button" onClick={() => { setShowNewCat(false); setNewCatName(''); setCatError(''); }} style={{ ...submitBtn('#3a4055'), background: 'transparent', border: '1px solid rgba(255,255,255,0.15)' }}>
@@ -178,7 +178,7 @@ export default function NewCaseStudyPage() {
                                         </button>
                                     </div>
                                 )}
-                                {catError && <p style={{ color: '#ff7c5c', fontSize: '12px', marginTop: '6px' }}>{catError}</p>}
+                                {catError && <p style={{ color: '#F9B45E', fontSize: '12px', marginTop: '6px' }}>{catError}</p>}
                             </div>
                         </div>
 
@@ -214,13 +214,13 @@ export default function NewCaseStudyPage() {
                         </div>
 
                         <div className="d-flex align-items-center gap-2">
-                            <input type="checkbox" id="featured" name="featured" checked={form.featured} onChange={handleChange} style={{ width: '16px', height: '16px', accentColor: '#ff3c00', cursor: 'pointer' }} />
+                            <input type="checkbox" id="featured" name="featured" checked={form.featured} onChange={handleChange} style={{ width: '16px', height: '16px', accentColor: '#F7941D', cursor: 'pointer' }} />
                             <label htmlFor="featured" style={{ color: '#c8cdd8', fontSize: '14px', cursor: 'pointer', margin: 0 }}>Mark as Featured</label>
                         </div>
                     </div>
 
                     <div className="d-flex gap-3 mt-4">
-                        <button type="submit" disabled={loading} style={submitBtn('#ff3c00')}>
+                        <button type="submit" disabled={loading} style={submitBtn('#F7941D')}>
                             {loading ? <><i className="bi bi-hourglass-split me-2"></i>Saving…</> : <><i className="bi bi-check-lg me-2"></i>Create Case Study</>}
                         </button>
                         <Link href="/admin/case-studies" style={cancelBtn}>Cancel</Link>
