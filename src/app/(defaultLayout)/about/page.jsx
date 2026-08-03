@@ -3,6 +3,7 @@ import Blog1 from '@/app/Components/Blog/Blog1';
 import Brand from '@/app/Components/Brand/Brand';
 import BreadCumb from '@/app/Components/Common/BreadCumb';
 import Project1 from '@/app/Components/Project/Project1';
+import Testimonial3 from '@/app/Components/Testimonial/Testimonial3';
 import React from 'react';
 
 export const metadata = {
@@ -33,6 +34,7 @@ const page = () => {
                 bgImage="/assets/images/inner/project-bg-3.png"
                 ClassAdd="project-area style-two"
             ></Project1>
+            <Testimonial3></Testimonial3>
             <Brand></Brand>
             <Blog1></Blog1>
         </div>

@@ -7,15 +7,17 @@ import Image from "next/image";
 
 const Hero3 = () => {
 
+    const isSingle = data.length <= 1;
+
     const settings = {
         dots: false,
-        infinite: true,
+        infinite: !isSingle,   // prevent clone-slide ghost on single entry
         speed: 900,
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
-        swipeToSlide: true,
-      };
+        swipeToSlide: !isSingle,
+    };
 
     return (
         <div className="hero-active owl-carousel">

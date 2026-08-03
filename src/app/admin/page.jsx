@@ -1,38 +1,32 @@
-﻿import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { unstable_noStore as noStore } from 'next/cache';
 import Link from 'next/link';
 import connectDB from '@/lib/mongodb';
 import mongoose from 'mongoose';
 
 export const metadata = {
-    title: 'Admin Dashboard | Drew Marketing Solutions',
+    title: 'Dashboard',
 };
-
-async function handleLogout() {
-    'use server';
-    const cookieStore = cookies();
-    cookieStore.set('admin_session', '', { maxAge: 0, path: '/' });
-    redirect('/admin/login');
-}
 
 const COLLECTIONS = [
     {
         key:         'insights',
         label:       'Insights',
         description: 'Blog posts & thought leadership articles',
-        icon:        'bi-pencil-square',
+        icon:        'bi-lightbulb-fill',
         color:       '#4f6ef7',
-        bg:          'rgba(79,110,247,0.12)',
+        bg:          'rgba(79,110,247,0.10)',
         href:        '/admin/insights',
+        addHref:     '/admin/insights/new',
     },
     {
         key:         'casestudies',
         label:       'Case Studies',
         description: 'Client project case study documents',
-        icon:        'bi-briefcase-fill',
+        icon:        'bi-folder-fill',
         color:       '#F7941D',
-        bg:          'rgba(247,148,29,0.12)',
+        bg:          'rgba(247,148,29,0.10)',
         href:        '/admin/case-studies',
+        addHref:     '/admin/case-studies/new',
     },
     {
         key:         'solutions',
@@ -40,8 +34,9 @@ const COLLECTIONS = [
         description: 'Services & solutions offered',
         icon:        'bi-gear-fill',
         color:       '#00c48c',
-        bg:          'rgba(0,196,140,0.12)',
+        bg:          'rgba(0,196,140,0.10)',
         href:        '/admin/solutions',
+        addHref:     '/admin/solutions/new',
     },
     {
         key:         'testimonials',
@@ -49,8 +44,9 @@ const COLLECTIONS = [
         description: 'Client reviews & testimonials',
         icon:        'bi-chat-quote-fill',
         color:       '#f7c137',
-        bg:          'rgba(247,193,55,0.12)',
+        bg:          'rgba(247,193,55,0.10)',
         href:        '/admin/testimonials',
+        addHref:     '/admin/testimonials/new',
     },
     {
         key:         'messages',
@@ -58,16 +54,16 @@ const COLLECTIONS = [
         description: 'Contact form submissions',
         icon:        'bi-envelope-fill',
         color:       '#a78bfa',
-        bg:          'rgba(167,139,250,0.12)',
+        bg:          'rgba(167,139,250,0.10)',
         href:        '/admin/messages',
     },
     {
         key:         'newsletter',
         label:       'Newsletter',
         description: 'Email subscribers',
-        icon:        'bi-mailbox2-flag',
+        icon:        'bi-newspaper',
         color:       '#34d399',
-        bg:          'rgba(52,211,153,0.12)',
+        bg:          'rgba(52,211,153,0.10)',
         href:        '/admin/newsletter',
     },
     {
@@ -76,8 +72,9 @@ const COLLECTIONS = [
         description: 'Team member profiles & photos',
         icon:        'bi-people-fill',
         color:       '#e879f9',
-        bg:          'rgba(232,121,249,0.12)',
+        bg:          'rgba(232,121,249,0.10)',
         href:        '/admin/team',
+        addHref:     '/admin/team/new',
     },
     {
         key:         'comments',
@@ -85,15 +82,15 @@ const COLLECTIONS = [
         description: 'Blog comment moderation queue',
         icon:        'bi-chat-dots-fill',
         color:       '#a78bfa',
-        bg:          'rgba(167,139,250,0.12)',
+        bg:          'rgba(167,139,250,0.10)',
         href:        '/admin/comments',
     },
 ];
 
 export default async function AdminDashboard() {
+    noStore();
     await connectDB();
 
-    // Fetch all collection counts in parallel
     const [counts, unreadCount, pendingComments] = await Promise.all([
         Promise.all(
             COLLECTIONS.map((col) =>
@@ -114,247 +111,146 @@ export default async function AdminDashboard() {
     }));
     const total = counts.reduce((a, b) => a + b, 0);
 
+    /* ── Styles (scoped to this page) ── */
+    const card = {
+        background: '#fff',
+        borderRadius: '12px',
+        padding: '24px',
+        border: '1px solid #e5e7eb',
+        boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+    };
+
     return (
-        <div
-            style={{
-                minHeight:   '100vh',
-                background:  'linear-gradient(160deg, #050a1e 0%, #0d1228 50%, #161a2b 100%)',
-                fontFamily:  'var(--body-color-font, system-ui, sans-serif)',
-            }}
-        >
-            {/* ── Top Nav ──────────────────────────────────────── */}
-            <nav
-                style={{
-                    background:     'rgba(255,255,255,0.03)',
-                    borderBottom:   '1px solid rgba(255,255,255,0.07)',
-                    padding:        '0 16px',
-                    height:         '64px',
-                    display:        'flex',
-                    alignItems:     'center',
-                    justifyContent: 'space-between',
-                    position:       'sticky',
-                    top:             0,
-                    zIndex:          100,
-                    backdropFilter: 'blur(12px)',
-                    gap:            '12px',
-                }}
-            >
-                <div className="d-flex align-items-center gap-3">
-                    <div
-                        style={{
-                            width:          '36px',
-                            height:         '36px',
-                            borderRadius:   '8px',
-                            background:     '#F7941D',
-                            display:        'flex',
-                            alignItems:     'center',
-                            justifyContent: 'center',
-                            flexShrink:     0,
-                        }}
-                    >
-                        <i className="bi bi-shield-lock-fill" style={{ color: '#fff', fontSize: '17px' }}></i>
-                    </div>
-                    <div>
-                        <span style={{ color: '#fff', fontWeight: 700, fontSize: '16px' }}>Drew Admin</span>
-                        <span
-                            style={{
-                                marginLeft:   '10px',
-                                background:   'rgba(247,148,29,0.18)',
-                                color:        '#F9B45E',
-                                fontSize:     '11px',
-                                fontWeight:   600,
-                                padding:      '2px 8px',
-                                borderRadius: '20px',
-                                letterSpacing:'0.4px',
-                            }}
-                        >
-                            DASHBOARD
-                        </span>
-                    </div>
-                </div>
-                <div className="d-flex align-items-center gap-3">
-                    <Link
-                        href="/"
-                        target="_blank"
-                        style={{
-                            color:      '#9aa0b4',
-                            fontSize:   '13px',
-                            textDecoration: 'none',
-                            display:    'flex',
-                            alignItems: 'center',
-                            gap:        '5px',
-                        }}
-                    >
-                        <i className="bi bi-box-arrow-up-right"></i> View Site
+        <div style={{ fontFamily: 'var(--body-color-font, system-ui, sans-serif)', maxWidth: '1100px' }}>
+
+            {/* Page header */}
+            <div style={{ marginBottom: '28px' }}>
+                <h2 style={{ margin: '0 0 4px', fontSize: '22px', fontWeight: 700, color: '#111827' }}>
+                    Dashboard Overview
+                </h2>
+                <p style={{ margin: 0, color: '#6b7280', fontSize: '14px' }}>
+                    Welcome back! Here&apos;s a summary of your content — {total} documents across {COLLECTIONS.length} collections.
+                </p>
+            </div>
+
+            {/* Summary strip */}
+            <div style={{
+                display: 'flex', flexWrap: 'wrap', gap: '12px',
+                marginBottom: '28px',
+            }}>
+                {collections.map((col) => (
+                    <Link key={col.key} href={col.href} style={{ textDecoration: 'none' }}>
+                        <div style={{
+                            background: '#fff', border: '1px solid #e5e7eb',
+                            borderRadius: '10px', padding: '14px 20px',
+                            display: 'flex', alignItems: 'center', gap: '12px',
+                            minWidth: '130px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+                            transition: 'box-shadow 0.2s',
+                        }}>
+                            <div style={{
+                                width: '36px', height: '36px', borderRadius: '8px',
+                                background: col.bg, display: 'flex',
+                                alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                            }}>
+                                <i className={`bi ${col.icon}`} style={{ color: col.color, fontSize: '16px' }}></i>
+                            </div>
+                            <div>
+                                <div style={{ fontSize: '20px', fontWeight: 800, color: '#111827', lineHeight: 1 }}>{col.count}</div>
+                                <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '2px' }}>{col.label}</div>
+                            </div>
+                            {col.unreadCount > 0 && (
+                                <span style={{
+                                    background: '#F7941D', color: '#fff',
+                                    fontSize: '10px', fontWeight: 700,
+                                    padding: '2px 7px', borderRadius: '20px',
+                                }}>
+                                    {col.unreadCount}
+                                </span>
+                            )}
+                        </div>
                     </Link>
-                    <form action={handleLogout}>
-                        <button
-                            type="submit"
-                            style={{
-                                background:   'rgba(247,148,29,0.15)',
-                                border:       '1px solid rgba(247,148,29,0.25)',
-                                borderRadius: '7px',
-                                color:        '#F9B45E',
-                                fontSize:     '13px',
-                                fontWeight:   600,
-                                padding:      '6px 16px',
-                                cursor:       'pointer',
-                                display:      'flex',
-                                alignItems:   'center',
-                                gap:          '6px',
-                            }}
-                        >
-                            <i className="bi bi-box-arrow-right"></i> Sign Out
-                        </button>
-                    </form>
-                </div>
-            </nav>
+                ))}
+            </div>
 
-            {/* ── Page Body ────────────────────────────────────── */}
-            <main style={{ padding: '24px 16px', maxWidth: '1100px', margin: '0 auto' }}>
-
-                {/* Header */}
-                <div className="mb-5">
-                    <h1 style={{ color: '#fff', fontSize: '28px', fontWeight: 700, margin: '0 0 6px' }}>
-                        Content Dashboard
-                    </h1>
-                    <p style={{ color: '#9aa0b4', margin: 0, fontSize: '15px' }}>
-                        Manage your site content. {total} total documents across {COLLECTIONS.length} collections.
-                    </p>
-                </div>
-
-                {/* Summary strip */}
-                <div
-                    style={{
-                        background:   'rgba(255,255,255,0.04)',
-                        border:       '1px solid rgba(255,255,255,0.08)',
-                        borderRadius: '12px',
-                        padding:      '20px',
-                        marginBottom: '32px',
-                    }}
-                >
-                    {/* Total count row */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                        <i className="bi bi-database-fill-check" style={{ color: '#F7941D', fontSize: '26px', flexShrink: 0 }}></i>
-                        <div>
-                            <div style={{ color: '#fff', fontWeight: 700, fontSize: '20px' }}>{total} Documents</div>
-                            <div style={{ color: '#9aa0b4', fontSize: '13px' }}>Total records in MongoDB</div>
-                        </div>
-                    </div>
-                    {/* Per-collection mini stats — wraps on mobile */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px 20px', borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: '16px' }}>
-                        {collections.map((col) => (
-                            <div key={col.key} style={{ textAlign: 'center', minWidth: '52px' }}>
-                                <div style={{ color: col.color, fontWeight: 700, fontSize: '18px' }}>{col.count}</div>
-                                <div style={{ color: '#9aa0b4', fontSize: '11px' }}>{col.label}</div>
+            {/* Collection cards */}
+            <div className="row g-3">
+                {collections.map((col) => (
+                    <div key={col.key} className="col-lg-6 col-md-6">
+                        <div style={card}>
+                            {/* Icon + count */}
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                                <div style={{
+                                    width: '48px', height: '48px', borderRadius: '12px',
+                                    background: col.bg, display: 'flex',
+                                    alignItems: 'center', justifyContent: 'center',
+                                }}>
+                                    <i className={`bi ${col.icon}`} style={{ color: col.color, fontSize: '22px' }}></i>
+                                </div>
+                                <div style={{ textAlign: 'right' }}>
+                                    <div style={{ fontSize: '32px', fontWeight: 800, color: '#111827', lineHeight: 1 }}>{col.count}</div>
+                                    <div style={{ fontSize: '12px', color: '#9ca3af' }}>documents</div>
+                                </div>
                             </div>
-                        ))}
-                    </div>
-                </div>
 
-                {/* Collection Cards */}
-                <div className="row g-4">
-                    {collections.map((col) => (
-                        <div key={col.key} className="col-lg-6 col-md-6">
-                            <div
-                                style={{
-                                    background:    'rgba(255,255,255,0.04)',
-                                    border:        '1px solid rgba(255,255,255,0.08)',
-                                    borderRadius:  '16px',
-                                    padding:       '28px',
-                                    transition:    '0.3s',
-                                    height:        '100%',
-                                    display:       'flex',
-                                    flexDirection: 'column',
-                                }}
-                                onMouseOver={undefined}
-                            >
-                                {/* Icon + Count row */}
-                                <div className="d-flex align-items-center justify-content-between mb-4">
-                                    <div
-                                        style={{
-                                            width:          '54px',
-                                            height:         '54px',
-                                            borderRadius:   '14px',
-                                            background:     col.bg,
-                                            display:        'flex',
-                                            alignItems:     'center',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        <i className={`bi ${col.icon}`} style={{ color: col.color, fontSize: '24px' }}></i>
-                                    </div>
-                                    <div style={{ textAlign: 'right' }}>
-                                        <div style={{ color: '#fff', fontSize: '36px', fontWeight: 800, lineHeight: 1 }}>
-                                            {col.count}
-                                        </div>
-                                        <div style={{ color: '#9aa0b4', fontSize: '12px', marginTop: '2px' }}>
-                                            documents
-                                        </div>
-                                    </div>
-                                </div>
+                            {/* Label */}
+                            <div style={{ flex: 1 }}>
+                                <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#111827', margin: '0 0 4px' }}>{col.label}</h3>
+                                <p style={{ fontSize: '13px', color: '#6b7280', margin: 0 }}>{col.description}</p>
+                                {col.unreadCount > 0 && (
+                                    <span style={{
+                                        display: 'inline-flex', alignItems: 'center', gap: '5px',
+                                        marginTop: '8px', background: 'rgba(247,148,29,0.12)',
+                                        color: '#d97706', fontSize: '12px', fontWeight: 700,
+                                        padding: '3px 10px', borderRadius: '20px',
+                                    }}>
+                                        <i className="bi bi-exclamation-circle-fill"></i>
+                                        {col.unreadCount} {col.badgeLabel}
+                                    </span>
+                                )}
+                            </div>
 
-                                {/* Label + Description */}
-                                <div style={{ flex: 1 }}>
-                                    <h3 style={{ color: '#fff', fontSize: '18px', fontWeight: 700, margin: '0 0 6px' }}>
-                                        {col.label}
-                                    </h3>
-                                    <p style={{ color: '#9aa0b4', fontSize: '13px', margin: 0 }}>
-                                        {col.description}
-                                    </p>
-                                    {col.unreadCount > 0 && (
-                                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '8px', background: 'rgba(247,148,29,0.15)', color: '#F9B45E', fontSize: '12px', fontWeight: 700, padding: '3px 10px', borderRadius: '20px' }}>
-                                            <i className="bi bi-envelope-exclamation-fill"></i>
-                                            {col.unreadCount} {col.badgeLabel || 'unread'}
-                                        </span>
-                                    )}
-                                </div>
+                            {/* Divider */}
+                            <div style={{ height: '1px', background: '#f3f4f6', margin: '16px 0' }} />
 
-                                {/* Divider */}
-                                <div
-                                    style={{
-                                        height:     '1px',
-                                        background: 'rgba(255,255,255,0.07)',
-                                        margin:     '20px 0',
-                                    }}
-                                />
-
-                                {/* Manage Button */}
-                                <Link
-                                    href={col.href}
-                                    style={{
-                                        display:        'flex',
-                                        alignItems:     'center',
-                                        justifyContent: 'center',
-                                        gap:            '8px',
-                                        padding:        '11px',
-                                        background:     col.bg,
-                                        border:         `1px solid ${col.color}30`,
-                                        borderRadius:   '9px',
-                                        color:          col.color,
-                                        fontSize:       '14px',
-                                        fontWeight:     700,
-                                        textDecoration: 'none',
-                                        transition:     '0.3s',
-                                        letterSpacing:  '0.3px',
-                                    }}
-                                >
-                                    <i className="bi bi-pencil-fill"></i>
-                                    Manage {col.label}
-                                    <i className="bi bi-arrow-right ms-auto"></i>
+                            {/* Actions */}
+                            <div style={{ display: 'flex', gap: '8px' }}>
+                                <Link href={col.href} style={{
+                                    flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                                    padding: '9px', background: col.bg,
+                                    border: `1px solid ${col.color}30`,
+                                    borderRadius: '8px', color: col.color,
+                                    fontSize: '13px', fontWeight: 700,
+                                    textDecoration: 'none', transition: '0.2s',
+                                }}>
+                                    <i className="bi bi-list-ul"></i> Manage
                                 </Link>
+                                {col.addHref && (
+                                    <Link href={col.addHref} style={{
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                                        padding: '9px 14px',
+                                        background: '#1B3A8C', borderRadius: '8px',
+                                        color: '#fff', fontSize: '13px', fontWeight: 700,
+                                        textDecoration: 'none', border: 'none',
+                                        transition: '0.2s', whiteSpace: 'nowrap',
+                                    }}>
+                                        <i className="bi bi-plus-lg"></i> Add
+                                    </Link>
+                                )}
                             </div>
                         </div>
-                    ))}
-                </div>
+                    </div>
+                ))}
+            </div>
 
-                {/* Footer note */}
-                <div className="text-center mt-5">
-                    <p style={{ color: '#3a4055', fontSize: '12px' }}>
-                        Drew Marketing Solutions Admin &mdash; For internal use only
-                    </p>
-                </div>
-            </main>
+            {/* Footer */}
+            <div style={{ marginTop: '40px', textAlign: 'center' }}>
+                <p style={{ color: '#d1d5db', fontSize: '12px' }}>
+                    Drew Marketing Solutions Admin &mdash; For internal use only
+                </p>
+            </div>
         </div>
     );
 }

@@ -1,9 +1,25 @@
+import { unstable_noStore as noStore } from 'next/cache';
+import Link from 'next/link';
 import SectionTitle from "../Common/SectionTitle";
 import BlogCard1 from "../BlogCard/BlogCard1";
 import BlogCardStyle2 from "../BlogCard/BlogCardStyle2";
-import Link from "next/link";
+import connectDB from '@/lib/mongodb';
+import mongoose from 'mongoose';
+import { getCloudinaryUrl } from '@/lib/cloudinaryUrl';
 
-const Blog1 = () => {
+const Blog1 = async () => {
+    noStore();
+    await connectDB();
+    const data = await mongoose.connection
+        .collection('insights')
+        .find({})
+        .sort({ createdAt: -1 })
+        .limit(3)
+        .toArray();
+
+    // Split: first post goes to BlogCard1 (large), rest to BlogCardStyle2 (side cards)
+    const [first, ...rest] = data;
+
     return (
         <div className="blog-area">
             <div className="container">
@@ -31,25 +47,26 @@ const Blog1 = () => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-xl-5 col-lg-6 col-md-6">
-                        <BlogCard1
-                            BlogImg="/assets/images/blog1.png"
-                            Title="Why Most Brands Confuse Activity With Strategy."
-                            Content="Spending on campaigns without a clear strategic foundation is the fastest way to waste budget and stall growth. Here's how to fix it."
-                        ></BlogCard1>
-                    </div>
+                    {first && (
+                        <div className="col-xl-5 col-lg-6 col-md-6">
+                            <BlogCard1
+                                BlogImg={getCloudinaryUrl(first.coverImage, 526, 354) || `https://picsum.photos/seed/blog1-${first._id}/526/354`}
+                                Title={first.title}
+                                Content={first.excerpt || ''}
+                                Slug={first.slug}
+                            ></BlogCard1>
+                        </div>
+                    )}
                     <div className="col-xl-7 col-lg-6 col-md-6">
-                        <BlogCardStyle2
-                             BlogImg="/assets/images/blog2.png"
-                             Title="The Alignment Problem: When Marketing and Business Goals Diverge."
-                             Content="The most dangerous gap in any growth plan isn't budget — it's misalignment between what marketing does and what the business actually needs."
-                        ></BlogCardStyle2>
-
-                        <BlogCardStyle2
-                             BlogImg="/assets/images/blog3.png"
-                             Title="Demand Generation Isn't Lead Generation. Here's the Difference."
-                             Content="Most brands optimise for leads when they should be building demand. Understanding the distinction can transform your pipeline entirely."
-                        ></BlogCardStyle2>
+                        {rest.map((item, i) => (
+                            <BlogCardStyle2
+                                key={i}
+                                BlogImg={getCloudinaryUrl(item.coverImage, 301, 260) || `https://picsum.photos/seed/blog2-${item._id}/${i + 1}/301/260`}
+                                Title={item.title}
+                                Content={item.excerpt || ''}
+                                Slug={item.slug}
+                            ></BlogCardStyle2>
+                        ))}
                     </div>
                 </div>
             </div>

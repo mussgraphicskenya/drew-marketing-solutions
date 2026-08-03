@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const BlogCard1 = ({BlogImg, Title, Content}) => {
+const BlogCard1 = ({BlogImg, Title, Content, Slug}) => {
+    const href = Slug ? `/blog/${Slug}` : '/blog';
     return (
         <div className="blog-singele-box">
             <div className="blog-thumb">
@@ -17,10 +18,10 @@ const BlogCard1 = ({BlogImg, Title, Content}) => {
                 <div className="blog-date">
                     <h4><i className="bi bi-calendar2-check"></i>Drew Insights <span><i className="bi bi-chat-left-text"></i>Strategy</span></h4>
                 </div>
-                <h3 className="blog-title"><Link href="/blog">{Title}</Link></h3>
+                <h3 className="blog-title"><Link href={href}>{Title}</Link></h3>
                 <p className="blog-tex">{Content}</p>
                 <div className="blog-btn">
-                    <Link href="/blog">READ MORE<i className="bi bi-arrow-right"></i></Link>
+                    <Link href={href}>READ MORE<i className="bi bi-arrow-right"></i></Link>
                 </div>
             </div>
         </div>

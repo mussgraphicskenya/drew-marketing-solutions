@@ -1,6 +1,7 @@
 import Link from "next/link";
 
-const BlogCardStyle2 = ({ BlogImg, Title, Content }) => {
+const BlogCardStyle2 = ({ BlogImg, Title, Content, Slug }) => {
+    const href = Slug ? `/blog/${Slug}` : '/blog';
     return (
         <div className="blog-singele-box-tow">
             {/* Responsive flex container:
@@ -64,11 +65,11 @@ const BlogCardStyle2 = ({ BlogImg, Title, Content }) => {
                         </h4>
                     </div>
                     <h3 className="blog-title-two">
-                        <Link href="/blog">{Title}</Link>
+                        <Link href={href}>{Title}</Link>
                     </h3>
                     <p className="blog-tex-tow">{Content}</p>
                     <div className="blog-btn-tow">
-                        <Link href="/blog">READ MORE<i className="bi bi-arrow-right"></i></Link>
+                        <Link href={href}>READ MORE<i className="bi bi-arrow-right"></i></Link>
                     </div>
                 </div>
             </div>

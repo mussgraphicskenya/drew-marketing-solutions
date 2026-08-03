@@ -1,9 +1,8 @@
 "use client"
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SectionTitle from "../Common/SectionTitle";
 import Form from "../Form/Form";
 import loadBackgroudImages from "../Common/loadBackgroudImages";
-import VideoModal from "../VideoModal/VideoModal";
 
 
 const Contact1 = () => {
@@ -12,23 +11,11 @@ const Contact1 = () => {
         loadBackgroudImages();
       }, []);
 
-      const [iframeSrc, setIframeSrc] = useState('about:blank');
-	  const [toggle, setToggle] = useState(false);
-	
-	  const handelClick = () => {
-		setIframeSrc("https://www.youtube.com/embed/rRid6GCJtgc");
-		setToggle(!toggle);
-	  };
-	  const handelClose = () => {
-		setIframeSrc('about:blank');
-		setToggle(!toggle);
-	  };
-      
     return (
         <div className="contact-area" data-background="/assets/images/contact-bg2.png">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-6 col-md-7">
+                        <div className="col-lg-8 col-md-10">
                             <div className="section-title text-left">
                             <SectionTitle
                                     SubTitle="CONTACT DREW"
@@ -37,20 +24,8 @@ const Contact1 = () => {
                             </div>
                             <Form></Form>
                         </div>
-                        <div className="col-lg-6 col-md-5">
-                            <div className="contact-box">
-                                <div className="contact-video-icon">
-                                    <span onClick={handelClick} className="video-vemo-icon venobox vbox-item" data-vbtype="youtube" data-autoplay="true">Play</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <VideoModal
-                    isTrue={toggle}
-                    iframeSrc={iframeSrc}
-                    handelClose={handelClose}        
-                ></VideoModal>
             </div>
 
     );

@@ -14,7 +14,6 @@ import Services3 from '../Components/Services/Services3';
 import About3 from '../Components/About/About3';
 import Counter from '../Components/Counter/Counter';
 import CaseStudy from '../Components/CaseStudy/CaseStudy';
-import Testimonial3 from '../Components/Testimonial/Testimonial3';
 import Process2 from '../Components/Process/Process2';
 import Faq2 from '../Components/Faq/Faq2';
 import Blog2 from '../Components/Blog/Blog2';
@@ -37,7 +36,6 @@ const page = () => {
            ></About3>
            <Counter></Counter>
            <CaseStudy></CaseStudy>
-           <Testimonial3></Testimonial3>
            <Process2></Process2>
            <Faq2></Faq2>
            <Blog2></Blog2>

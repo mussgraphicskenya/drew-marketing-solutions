@@ -126,7 +126,7 @@ const Footer = () => {
                     <div className="row copyright">
                         <div className="col-lg-6 col-md-6 col-sm-6">
                             <div className="-copyright-text">
-                                <p>© Copyright 2025 By Drew Marketing Solutions</p>
+                                <p style={{color: '#ffffff', opacity: 1}}>© Copyright 2025 By Drew Marketing Solutions</p>
                             </div>
                         </div>
                         <div className="col-lg-6 col-md-6 col-sm-6">

@@ -1,24 +1,8 @@
-"use client"
 import parse from 'html-react-parser';
-import { useState } from 'react';
-import VideoModal from '../VideoModal/VideoModal';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const About4 = ({MainImg,SubTitle,Title,Content,listTitle1,listTitle2,BoxTitle1,BoxTitle2}) => {
-
-
-	  const [iframeSrc, setIframeSrc] = useState('about:blank');
-	  const [toggle, setToggle] = useState(false);
-	
-	  const handelClick = () => {
-		setIframeSrc("https://www.youtube.com/embed/rRid6GCJtgc");
-		setToggle(!toggle);
-	  };
-	  const handelClose = () => {
-		setIframeSrc('about:blank');
-		setToggle(!toggle);
-	  };
 
     return (
 			<div className="about-us-area">
@@ -65,9 +49,6 @@ const About4 = ({MainImg,SubTitle,Title,Content,listTitle1,listTitle2,BoxTitle1,
 								<div className="about-us-img">
 									<Image src={MainImg} alt="img" width={635} height={520}   />
 								</div>
-								<div className="about-us-video-icon" onClick={handelClick}>	
-									<span className="video-vemo-icon venobox vbox-item" data-vbtype="youtube" data-autoplay="true"><i className="bi bi-play"></i><span>WATCH VIDEO</span></span>
-								</div>
 								<div className="about-us-shape">
 								<Image src="/assets/images/inner/us-shape.png" alt="img" width={103} height={22}   />
 								</div>
@@ -81,11 +62,6 @@ const About4 = ({MainImg,SubTitle,Title,Content,listTitle1,listTitle2,BoxTitle1,
 						<Image src="/assets/images/inner/about-us-she.png" alt="img" width={975} height={790}   />
 					</div>
 				</div>
-				<VideoModal
-					isTrue={toggle}
-					iframeSrc={iframeSrc}
-					handelClose={handelClose}        
-					></VideoModal>
 			</div>
     );
 };

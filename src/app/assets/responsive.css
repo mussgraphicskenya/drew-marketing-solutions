@@ -1,4 +1,4 @@
-
+﻿
 /* Normal desktop :1400px. */
 @media (min-width: 1400px) and (max-width: 1600px) {
 .solutek_nav_manu {
@@ -4622,5 +4622,37 @@ h3.blog-details-title.two {
     }
     ul.breadcumb-list {
         margin-top: 12px;
+    }
+}
+
+/*---=====================================================
+   Hero section — hide photo column on all mobile devices
+   hero-geo.png (.hero-left-shape) is in the LEFT/text
+   column and stays visible. Only the RIGHT column
+   (.col-lg-7 > .hero-thumb-3) is hidden.
+   Applies to all breakpoints <= 767px
+=========================================================---*/
+@media only screen and (max-width: 767px) {
+    /* Hide the right photo column only — NOT .hero-left-shape
+       which holds the decorative hero-geo.png in the left col */
+    .hero-area.style-three .col-lg-7,
+    .hero-area.style-three .hero-thumb-3,
+    .hero-area.style-three .hero-thumb-shape {
+        display: none !important;
+    }
+
+    /* Make text/content column full-width */
+    .hero-area.style-three .col-lg-5,
+    .hero-area.style-three .col-md-7 {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+
+    /* Auto height — no fixed px needed once photo col is gone */
+    .hero-area.style-three {
+        height: auto !important;
+        min-height: 480px;
+        padding-bottom: 40px;
     }
 }
