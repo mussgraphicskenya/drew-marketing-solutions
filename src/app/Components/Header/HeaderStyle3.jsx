@@ -3,10 +3,14 @@ import { useEffect, useState } from 'react';
 import Nav from './Nav';
 import Link from 'next/link';
 import Image from 'next/image';
-export default function HeaderStyle3({ variant }) {
+export default function HeaderStyle3({ variant, contactAddress, contactEmail, contactHours, socialFacebook, socialTwitter, socialLinkedin, socialInstagram }) {
   const [mobileToggle, setMobileToggle] = useState(false);
   const [isSticky, setIsSticky] = useState();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
+
+  const address = contactAddress || 'Westlands, Nairobi - Kenya';
+  const email   = contactEmail   || 'hello@drewmarketingsolutions.com';
+  const hours   = contactHours   || '8.00 am - 6.00 pm';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,19 +46,19 @@ export default function HeaderStyle3({ variant }) {
           <div className="cs_top_header_in">
             <div className="cs_top_header_left header-info">
               <ul className="cs_top_nav d-flex flex-wrap align-items-center cs_fs_12 text-white m-0 p-0">
-                <li><i className="bi bi-geo-alt-fill"></i>Westlands, Nairobi - Kenya</li>
-                <li className="exam-gmail"><i className="bi bi-envelope"></i>hello@drewmarketingsolutions.com</li>
-                <li><i className="bi bi-alarm"></i>8.00 am - 6.00 pm</li>
+                <li><i className="bi bi-geo-alt-fill"></i>{address}</li>
+                <li className="exam-gmail"><i className="bi bi-envelope"></i>{email}</li>
+                <li><i className="bi bi-alarm"></i>{hours}</li>
               </ul>
             </div>
             <div className="cs_top_header_right">
             <div className="cs_header_social_links_wrap">
                 <div className="cs_header_social_links top-header-social-icon">
                   <ul>
-                    <li><a href="#"><i className="bi bi-facebook"></i></a></li>
-                    <li><a href="#"><i className="bi bi-twitter"></i></a></li>
-                    <li><a href="#"><i className="bi bi-linkedin"></i></a></li>
-                    <li><a href="#"><i className="bi bi-instagram"></i></a></li>
+                    {socialFacebook  && <li><a href={socialFacebook}  target="_blank" rel="noopener noreferrer"><i className="bi bi-facebook"></i></a></li>}
+                    {socialTwitter   && <li><a href={socialTwitter}   target="_blank" rel="noopener noreferrer"><i className="bi bi-twitter-x"></i></a></li>}
+                    {socialLinkedin  && <li><a href={socialLinkedin}  target="_blank" rel="noopener noreferrer"><i className="bi bi-linkedin"></i></a></li>}
+                    {socialInstagram && <li><a href={socialInstagram} target="_blank" rel="noopener noreferrer"><i className="bi bi-instagram"></i></a></li>}
                 </ul>
                 </div>
               </div>

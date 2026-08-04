@@ -5867,7 +5867,6 @@ ul.list-style-one li a:hover {
   background-repeat: no-repeat;
   background-size: contain;
   position: relative;
-  margin: 0px 0px 0 -16px;
 }
 
 .breadcumb-area.about {
@@ -5896,8 +5895,6 @@ ul.breadcumb-list {
   margin-top: 24px;
   display: inline-block;
   padding: 4px 10px;
-  border-radius: 5px;
-  background-color: #161a2b;
 }
 
 .breadcumb-content ul li {

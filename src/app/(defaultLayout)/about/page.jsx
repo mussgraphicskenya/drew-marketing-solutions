@@ -1,3 +1,6 @@
+import { unstable_noStore as noStore } from 'next/cache';
+import connectDB from '@/lib/mongodb';
+import mongoose from 'mongoose';
 import About4 from '@/app/Components/About/About4';
 import Blog1 from '@/app/Components/Blog/Blog1';
 import Brand from '@/app/Components/Brand/Brand';
@@ -16,14 +19,25 @@ export const metadata = {
     },
 };
 
-const page = () => {
+export default async function AboutPage() {
+    noStore();
+
+    let settings = {};
+    try {
+        await connectDB();
+        const db  = mongoose.connection;
+        settings  = (await db.collection('settings').findOne({})) ?? {};
+    } catch (_) {
+        // Silently fall back to defaults if DB is unavailable
+    }
+
     return (
         <div className='about-page'>
             <BreadCumb Title="About Drew"></BreadCumb>
             <About4
-                MainImg="https://picsum.photos/seed/about-us/635/520"
-                SubTitle="DREW MARKETING SOLUTIONS"
-                Title="We didn't start Drew to do marketing.<br> We started it to <span>fix it.</span>"
+                MainImg={settings.aboutPageImage || 'https://picsum.photos/seed/about-us/635/520'}
+                SubTitle={settings.aboutPageSubTitle || 'DREW MARKETING SOLUTIONS'}
+                Title={settings.aboutPageTitle || "We didn't start Drew to do marketing.<br> We started it to <span>fix it.</span>"}
                 Content="We are a Nairobi-based strategic growth partner helping ambitious brands align their marketing to their business goals."
                 listTitle1="Strategy Before Spend"
                 listTitle2="Data-Driven Growth Systems"
@@ -39,6 +53,4 @@ const page = () => {
             <Blog1></Blog1>
         </div>
     );
-};
-
-export default page;
+}

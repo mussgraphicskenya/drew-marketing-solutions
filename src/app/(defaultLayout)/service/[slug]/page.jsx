@@ -1,4 +1,4 @@
-﻿import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_noStore as noStore } from 'next/cache';
 import BreadCumb from '@/app/Components/Common/BreadCumb';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -35,7 +35,7 @@ const SolutionDetailPage = async ({ params }) => {
     noStore();
     await connectDB();
 
-    const [item, otherSolutions] = await Promise.all([
+    const [item, otherSolutions, settings] = await Promise.all([
         mongoose.connection
             .collection('solutions')
             .findOne({ slug: params.slug }),
@@ -45,7 +45,11 @@ const SolutionDetailPage = async ({ params }) => {
             .sort({ order: 1 })
             .limit(6)
             .toArray(),
+        mongoose.connection.collection('settings').findOne({}),
     ]);
+
+    const contactPhone = settings?.phone || '+254 700 000 000';
+    const contactEmail = settings?.email || 'hello@drewmarketingsolutions.com';
 
     if (!item) {
         return (
@@ -251,9 +255,9 @@ const SolutionDetailPage = async ({ params }) => {
                                     <div className="widget-sidber-contact-box">
                                         <div className="widget-sidber-contact"></div>
                                         <p className="widget-sidber-contact-text">Call Us Anytime</p>
-                                        <h3 className="widget-sidber-contact-number">+254 700 000 000</h3>
+                                        <h3 className="widget-sidber-contact-number">{contactPhone}</h3>
                                         <span className="widget-sidber-contact-gmail">
-                                            <i className="bi bi-envelope-fill"></i>hello@drewmarketingsolutions.com
+                                            <i className="bi bi-envelope-fill"></i>{contactEmail}
                                         </span>
                                         <div className="widget-sidber-contact-btn">
                                             <Link href="/contact">Book A Session <i className="bi bi-arrow-right"></i></Link>

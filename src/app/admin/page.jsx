@@ -245,6 +245,26 @@ export default async function AdminDashboard() {
                 ))}
             </div>
 
+            {/* Settings quick action */}
+            <div style={{ marginTop: '32px' }}>
+                <Link href="/admin/settings" style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '10px',
+                    background: '#fff', border: '1px solid #e5e7eb',
+                    borderRadius: '10px', padding: '14px 20px',
+                    textDecoration: 'none', boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+                    transition: '0.2s',
+                }}>
+                    <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(27,58,140,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <i className="bi bi-sliders" style={{ color: '#1B3A8C', fontSize: '16px' }}></i>
+                    </div>
+                    <div>
+                        <div style={{ fontSize: '14px', fontWeight: 700, color: '#111827' }}>Site Settings</div>
+                        <div style={{ fontSize: '12px', color: '#6b7280' }}>Manage images, text &amp; contact info</div>
+                    </div>
+                    <i className="bi bi-arrow-right" style={{ color: '#9ca3af', marginLeft: '8px' }}></i>
+                </Link>
+            </div>
+
             {/* Footer */}
             <div style={{ marginTop: '40px', textAlign: 'center' }}>
                 <p style={{ color: '#d1d5db', fontSize: '12px' }}>

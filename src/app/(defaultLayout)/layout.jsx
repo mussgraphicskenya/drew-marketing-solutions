@@ -1,11 +1,11 @@
 import React from 'react';
-import HeaderStyle3 from '../Components/Header/HeaderStyle3';
+import HeaderWrapper from '../Components/Header/HeaderWrapper';
 import Footer from '../Components/Footer/Footer';
 
 const layout = ({ children }) => {
     return (
         <div className='main-page-area3'>
-            <HeaderStyle3></HeaderStyle3>
+            <HeaderWrapper></HeaderWrapper>
             {children}
             <Footer></Footer>
         </div>

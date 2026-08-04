@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import NewsletterForm from "./NewsletterForm";
+import connectDB from '@/lib/mongodb';
+import mongoose from 'mongoose';
 
-const Footer = () => {
+const Footer = async () => {
 
     const Services = [
         'Market Intelligence',
@@ -34,6 +36,21 @@ const Footer = () => {
         Number:'+254 700 000 000'
       }
 
+      let settings = {};
+      try {
+        await connectDB();
+        settings = (await mongoose.connection.collection('settings').findOne({})) ?? {};
+      } catch (_) {}
+
+      const contactPhone = settings.phone    || '+254 700 000 000';
+      const contactEmail = settings.email    || 'hello@drewmarketingsolutions.com';
+      const contactAddr  = settings.address  || 'Westlands, Nairobi - Kenya';
+      const contactHours = settings.hours    || '8.00 am - 6.00 pm';
+      const socialFb     = settings.socialFacebook  || '';
+      const socialTw     = settings.socialTwitter   || '';
+      const socialLi     = settings.socialLinkedin  || '';
+      const socialIg     = settings.socialInstagram || '';
+
     return (
         <div className="footer_main_area">
             <div className="address-area">
@@ -56,7 +73,7 @@ const Footer = () => {
                                 </div>
                                 <div className="solutek-btn">
                                     <Link href="/contact">
-                                        {AdressContent.Number}
+                                        {contactPhone}
                                         <div className="solutek-hover-btn hover-bx"></div>
                                         <div className="solutek-hover-btn hover-bx2"></div>
                                         <div className="solutek-hover-btn hover-bx3"></div>
@@ -81,10 +98,10 @@ const Footer = () => {
                                 <p className="footer-widget-text">{LogoContent.Content}</p>
                                 <div className="footer-social">
                                     <div className="footer-widget-social">
-                                        <a href="#"><i className="bi bi-facebook"></i></a>
-                                        <a href="#"><i className="bi bi-twitter"></i></a>
-                                        <a href="#"><i className="bi bi-linkedin"></i></a>
-                                        <a href="#"><i className="bi bi-instagram"></i></a>                                        
+                                        {socialFb && <a href={socialFb} target="_blank" rel="noopener noreferrer"><i className="bi bi-facebook"></i></a>}
+                                        {socialTw && <a href={socialTw} target="_blank" rel="noopener noreferrer"><i className="bi bi-twitter-x"></i></a>}
+                                        {socialLi && <a href={socialLi} target="_blank" rel="noopener noreferrer"><i className="bi bi-linkedin"></i></a>}
+                                        {socialIg && <a href={socialIg} target="_blank" rel="noopener noreferrer"><i className="bi bi-instagram"></i></a>}
                                     </div>
                                 </div>
                             </div>

@@ -31,9 +31,15 @@ export async function generateMetadata({ params }) {
 
 const CaseStudyPage = async ({ params }) => {
     await connectDB();
-    const item = await mongoose.connection
-        .collection("casestudies")
-        .findOne({ slug: params.slug });
+    const [item, settings] = await Promise.all([
+        mongoose.connection
+            .collection("casestudies")
+            .findOne({ slug: params.slug }),
+        mongoose.connection.collection('settings').findOne({}),
+    ]);
+
+    const contactPhone = settings?.phone || '+254 700 000 000';
+    const contactEmail = settings?.email || 'hello@drewmarketingsolutions.com';
 
     if (!item) {
         return (
@@ -169,9 +175,9 @@ const CaseStudyPage = async ({ params }) => {
                                         <div className="widget-sidber-contact">
                                         </div>
                                         <p className="widget-sidber-contact-text">Call Us Anytime</p>
-                                        <h3 className="widget-sidber-contact-number">+254 700 000 000</h3>
+                                        <h3 className="widget-sidber-contact-number">{contactPhone}</h3>
                                         <span className="widget-sidber-contact-gmail">
-                                            <i className="bi bi-envelope-fill"></i>hello@drewmarketingsolutions.com
+                                            <i className="bi bi-envelope-fill"></i>{contactEmail}
                                         </span>
                                         <div className="widget-sidber-contact-btn">
                                             <Link href="/contact">Contact Us <i className="bi bi-arrow-right"></i></Link>

@@ -9,6 +9,7 @@ const TRANSFORMS = {
     'solution-image': [{ width: 1200, height: 800,  crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
     'solution-icon':  [{ width: 200,  height: 200,  crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
     'team':           [{ width: 800,  height: 1000, crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
+    'about':          [{ width: 800,  height: 800,  crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
     'general':        [{ width: 1600, height: 1600, crop: 'limit', quality: 'auto', fetch_format: 'auto' }],
 };
 

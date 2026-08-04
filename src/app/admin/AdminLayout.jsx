@@ -20,6 +20,7 @@ const NAV = [
     { label: 'Messages',     href: '/admin/messages',     icon: 'bi-envelope-fill',    badge: 'unread' },
     { label: 'Newsletter',   href: '/admin/newsletter',   icon: 'bi-newspaper' },
     { label: 'Comments',     href: '/admin/comments',     icon: 'bi-chat-dots-fill',   badge: 'pending' },
+    { label: 'Settings',     href: '/admin/settings',     icon: 'bi-sliders' },
 ];
 
 /* ── Logout helper (client-side fetch → redirect) ─────── */
